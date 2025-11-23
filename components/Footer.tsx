@@ -20,23 +20,7 @@ const Footer: React.FC = () => {
       { name: "ShopNest Devices", path: "/devices" },
       { name: "ShopNest Science", path: "/science" }
     ],
-    "Make Money with Us": [
-      { name: "Sell products on ShopNest", path: "/sell" },
-      { name: "Sell on ShopNest Business", path: "/sell-business" },
-      { name: "Sell apps on ShopNest", path: "/sell-apps" },
-      { name: "Become an Affiliate", path: "/affiliate" },
-      { name: "Advertise Your Products", path: "/advertise" },
-      { name: "Self-Publish with Us", path: "/self-publish" },
-      { name: "Host a ShopNest Hub", path: "/host-hub" }
-    ],
-    "ShopNest Payment Products": [
-      { name: "ShopNest Business Card", path: "/business-card" },
-      { name: "Shop with Points", path: "/shop-with-points" },
-      { name: "Reload Your Balance", path: "/reload-balance" },
-      { name: "ShopNest Currency Converter", path: "/currency-converter" }
-    ],
     "Let Us Help You": [
-      { name: "ShopNest and COVID-19", path: "/covid-19" },
       { name: "Your Account", path: "/profile" },
       { name: "Your Orders", path: "/profile" },
       { name: "Shipping Rates & Policies", path: "/shipping" },
@@ -59,11 +43,11 @@ const Footer: React.FC = () => {
       {/* Main Links Section */}
       <div className="bg-slate-800 text-white py-12 border-b border-slate-700">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {Object.entries(footerLinks).map(([title, links]) => (
-              <div key={title}>
+              <div key={title} className="flex flex-col items-center md:items-start">
                 <h3 className="font-bold text-base mb-4 text-white">{title}</h3>
-                <ul className="space-y-2">
+                <ul className="space-y-2 flex flex-col items-center md:items-start">
                   {links.map((link, index) => (
                     <li key={index}>
                       <Link 

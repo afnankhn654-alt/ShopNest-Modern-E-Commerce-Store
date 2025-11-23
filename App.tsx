@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
@@ -14,7 +14,7 @@ import MobileLayout from './components/MobileLayout';
 import TopLoader from './components/TopLoader';
 import Spinner from './components/Spinner';
 
-const { HashRouter, Routes, Route } = ReactRouterDOM as any;
+const { HashRouter, Routes, Route, useLocation } = ReactRouterDOM as any;
 
 // Lazy load pages to split the bundle and improve initial load performance
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -41,6 +41,16 @@ const DesktopLayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
     <BottomNavBar />
   </div>
 );
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 const AppContent: React.FC = () => {
   const { isDesktop } = useDeviceDetection();
@@ -118,6 +128,7 @@ const App: React.FC = () => {
             <CartProvider>
               <WishlistProvider>
                 <HashRouter>
+                  <ScrollToTop />
                   <TopLoader />
                   <AppContent />
                 </HashRouter>
