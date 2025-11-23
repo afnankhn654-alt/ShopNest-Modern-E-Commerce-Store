@@ -208,7 +208,7 @@ const SearchResultsPage: React.FC = () => {
           <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-md mx-auto">
             We couldn't find any products matching "{query}". Try checking your spelling or using different keywords.
           </p>
-          <Link to="/products" className="inline-flex items-center justify-center bg-primary-600 text-white font-bold py-3 px-8 rounded-full hover:bg-primary-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-transform">
+          <Link to="/" className="inline-flex items-center justify-center bg-primary-600 text-white font-bold py-3 px-8 rounded-full hover:bg-primary-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-transform">
             Browse All Products
           </Link>
         </div>

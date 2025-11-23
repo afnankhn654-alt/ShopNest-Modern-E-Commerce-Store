@@ -152,7 +152,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   // Apply Cursor Style (PC Only)
   useEffect(() => {
       // Remove all cursor classes first
-      const cursorClasses = ['cursor-default', 'cursor-retro', 'cursor-neon', 'cursor-minimal', 'cursor-fantasy', 'cursor-modern', 'cursor-scifi', 'cursor-nature'];
+      const cursorClasses = ['cursor-default', 'cursor-retro', 'cursor-neon', 'cursor-minimal', 'cursor-fantasy', 'cursor-modern', 'cursor-scifi', 'cursor-nature', 'cursor-mac'];
       document.body.classList.remove(...cursorClasses);
 
       // Only apply custom cursor if on desktop

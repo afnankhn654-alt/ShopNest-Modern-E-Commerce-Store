@@ -34,7 +34,7 @@ const WishlistPage: React.FC = () => {
             <HeartIcon className="h-16 w-16 mx-auto text-gray-400" />
             <p className="mt-4 text-xl text-gray-500 dark:text-gray-400">Your wishlist is empty.</p>
             <p className="mt-2 text-gray-500">Add your favorite items to your wishlist to keep track of them.</p>
-            <Link to="/products" className="mt-6 inline-block bg-primary-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors duration-300">
+            <Link to="/" className="mt-6 inline-block bg-primary-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors duration-300">
               Discover Products
             </Link>
           </div>

@@ -282,7 +282,7 @@ const CheckoutPage: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="text-center p-8 glass-panel rounded-2xl shadow-xl">
           <h1 className="text-2xl font-bold mb-4">Cart Empty</h1>
-          <button onClick={() => navigate('/products')} className="text-primary-600 hover:underline">Return to Shop</button>
+          <button onClick={() => navigate('/')} className="text-primary-600 hover:underline">Return to Shop</button>
         </div>
       </div>
     );

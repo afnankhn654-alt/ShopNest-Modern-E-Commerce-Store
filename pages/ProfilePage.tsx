@@ -30,6 +30,7 @@ const CURSOR_STYLES = [
     { id: 'fantasy', name: 'Fantasy', icon: '⚔️' },
     { id: 'scifi', name: 'Sci-Fi', icon: '🛸' },
     { id: 'nature', name: 'Nature', icon: '🌿' },
+    { id: 'mac', name: 'macOS Black', icon: '' },
 ];
 
 const ProfilePage: React.FC = () => {
