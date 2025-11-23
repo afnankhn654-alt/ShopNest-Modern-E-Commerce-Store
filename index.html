@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopNest</title>
+    
+    <!-- Google Fonts for Mobile/Tablet Creative UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'mobile-display': ['Fredoka', 'sans-serif'],
+              'mobile-body': ['Quicksand', 'sans-serif'],
+            },
+            colors: {
+              primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a","950":"#172554"}
+            },
+            animation: {
+              'gradient-x': 'gradient-x 15s ease infinite',
+              'progress-indeterminate': 'progress-indeterminate 1.5s infinite linear',
+              'slide-up': 'slide-up 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
+              'fade-in': 'fade-in 0.3s ease-out',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'shimmer': 'shimmer 2s infinite linear',
+              'float': 'float 3s ease-in-out infinite',
+            },
+            keyframes: {
+              'gradient-x': {
+                '0%, 100%': {
+                  'background-size': '400% 400%',
+                  'background-position': '0% 50%'
+                },
+                '50%': {
+                  'background-size': '400% 400%',
+                  'background-position': '100% 50%'
+                },
+              },
+              'progress-indeterminate': {
+                '0%': { transform: 'translateX(-100%) scaleX(0.2)' },
+                '50%': { transform: 'translateX(0%) scaleX(0.5)' },
+                '100%': { transform: 'translateX(100%) scaleX(0.2)' }
+              },
+              'slide-up': {
+                '0%': { transform: 'translateY(100%)' },
+                '100%': { transform: 'translateY(0%)' }
+              },
+              'fade-in': {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' }
+              },
+              shimmer: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(100%)' }
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom Gradient Background Class */
+      .animate-gradient-bg {
+        background: linear-gradient(-45deg, #eff6ff, #f3e8ff, #fff1f2, #f0fdf4);
+        background-size: 400% 400%;
+        animation: gradient-x 15s ease infinite;
+      }
+      
+      .dark .animate-gradient-bg {
+        background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #064e3b);
+        background-size: 400% 400%;
+        animation: gradient-x 15s ease infinite;
+      }
+
+      /* Loader Bar Transition */
+      .loader-bar {
+        transition: width 0.2s ease-in-out, opacity 0.4s ease-in-out;
+      }
+
+      /* 3D Card & Creative Checkout Styles */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      
+      .preserve-3d {
+        transform-style: preserve-3d;
+      }
+      
+      .backface-hidden {
+        backface-visibility: hidden;
+      }
+      
+      .rotate-y-180 {
+        transform: rotateY(180deg);
+      }
+
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      .dark .glass-panel {
+        background: rgba(17, 24, 39, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .shiny-text {
+        background: linear-gradient(
+          to right,
+          #a855f7 20%,
+          #3b82f6 40%,
+          #06b6d4 60%,
+          #a855f7 80%
+        );
+        background-size: 200% auto;
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        animation: shine 3s linear infinite;
+      }
+
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
+      }
+
+      /* Custom Scrollbar hide */
+      .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+      }
+      .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+      }
+
+      /* Mobile Snap Scrolling */
+      .snap-y-mandatory {
+        scroll-snap-type: y mandatory;
+      }
+      .snap-center {
+        scroll-snap-align: center;
+      }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/heroicons/2.0.18/24/outline/heroicons.min.css" rel="stylesheet">
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@heroicons/react/": "https://aistudiocdn.com/@heroicons/react@^2.2.0/",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^6.22.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
