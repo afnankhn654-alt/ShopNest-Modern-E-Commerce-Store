@@ -1,16 +1,34 @@
-
 import React, { createContext, useContext, useEffect, ReactNode, useCallback, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { Theme, Layout } from '../types';
+import { useDeviceDetection } from '../hooks/useDeviceDetection';
+import { Layout } from '../types';
+
+export type ThemeMode = 'light' | 'dark' | 'high-contrast' | 'custom';
+
+export interface CustomThemeColors {
+  primary: string;
+  secondary: string;
+  background: string;
+  cardBackground: string;
+  text: string;
+  accent: string;
+}
 
 interface ThemeContextType {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  themeMode: ThemeMode;
+  setThemeMode: (mode: ThemeMode) => void;
   layout: Layout;
   setLayout: (layout: Layout) => void;
   toggleTheme: () => void;
-  primaryColor: string;
+  
+  // Custom Theme Colors
+  customColors: CustomThemeColors;
+  setCustomColors: (colors: CustomThemeColors) => void;
+  
+  // Legacy support for simple primary color setting (mapped to custom primary)
+  primaryColor: string; 
   setPrimaryColor: (color: string) => void;
+
   cursorStyle: string;
   setCursorStyle: (style: string) => void;
 }
@@ -57,57 +75,121 @@ const generatePalette = (hex: string) => {
 };
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useLocalStorage<Theme>('theme', 'light');
+  const [themeMode, setThemeMode] = useLocalStorage<ThemeMode>('themeMode', 'light');
   const [layout, setLayout] = useLocalStorage<Layout>('layout', 'grid');
-  const [primaryColor, setPrimaryColor] = useLocalStorage<string>('primaryColor', '#3b82f6');
-  const [cursorStyle, setCursorStyle] = useLocalStorage<string>('cursorStyle', 'default');
+  
+  const [customColors, setCustomColors] = useLocalStorage<CustomThemeColors>('customColors', {
+    primary: '#3b82f6',
+    secondary: '#64748b',
+    background: '#f3f4f6',
+    cardBackground: '#ffffff',
+    text: '#111827',
+    accent: '#8b5cf6'
+  });
 
-  // Apply Dark/Light Mode
+  const [cursorStyle, setCursorStyle] = useLocalStorage<string>('cursorStyle', 'default');
+  
+  // Get device info to restrict features
+  const { isDesktop } = useDeviceDetection();
+
+  // Apply Theme Mode Logic
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove(theme === 'light' ? 'dark' : 'light');
-    root.classList.add(theme);
-  }, [theme]);
+    
+    // Reset classes
+    root.classList.remove('dark', 'light', 'high-contrast', 'custom-theme');
+    
+    // Remove custom style override if it exists
+    const existingStyle = document.getElementById('custom-theme-style');
+    if (existingStyle) existingStyle.remove();
+
+    if (themeMode === 'dark') {
+      root.classList.add('dark');
+    } else if (themeMode === 'high-contrast') {
+      root.classList.add('high-contrast');
+    } else if (themeMode === 'custom') {
+      root.classList.add('custom-theme');
+      
+      // Inject CSS variables for custom colors
+      const style = document.createElement('style');
+      style.id = 'custom-theme-style';
+      style.innerHTML = `
+        :root {
+          --color-custom-bg: ${customColors.background};
+          --color-custom-card: ${customColors.cardBackground};
+          --color-custom-text: ${customColors.text};
+        }
+        .custom-theme body {
+          background-color: ${customColors.background} !important;
+          color: ${customColors.text} !important;
+        }
+        .custom-theme .bg-white, .custom-theme .dark\\:bg-gray-800, .custom-theme .bg-gray-50, .custom-theme .dark\\:bg-gray-900 {
+           background-color: ${customColors.cardBackground} !important;
+           color: ${customColors.text} !important;
+        }
+        .custom-theme .text-gray-900, .custom-theme .dark\\:text-white, .custom-theme .text-gray-800 {
+           color: ${customColors.text} !important;
+        }
+      `;
+      document.head.appendChild(style);
+    } else {
+      root.classList.add('light');
+    }
+  }, [themeMode, customColors]);
 
   // Apply Primary Color Palette
   useEffect(() => {
-    const palette = generatePalette(primaryColor);
+    const colorToUse = customColors.primary;
+    const palette = generatePalette(colorToUse);
     if (palette) {
         const root = document.documentElement;
         Object.entries(palette).forEach(([key, value]) => {
             root.style.setProperty(`--color-primary-${key}`, `${value.r} ${value.g} ${value.b}`);
         });
     }
-  }, [primaryColor]);
+  }, [customColors.primary]);
 
-  // Apply Cursor Style
+  // Apply Cursor Style (PC Only)
   useEffect(() => {
-      document.body.classList.remove('cursor-default', 'cursor-retro', 'cursor-neon', 'cursor-minimal');
-      if (cursorStyle !== 'default') {
+      // Remove all cursor classes first
+      const cursorClasses = ['cursor-default', 'cursor-retro', 'cursor-neon', 'cursor-minimal', 'cursor-fantasy', 'cursor-modern', 'cursor-scifi', 'cursor-nature'];
+      document.body.classList.remove(...cursorClasses);
+
+      // Only apply custom cursor if on desktop
+      if (isDesktop && cursorStyle !== 'default') {
           document.body.classList.add(`cursor-${cursorStyle}`);
       }
-  }, [cursorStyle]);
+  }, [cursorStyle, isDesktop]);
 
   const toggleTheme = useCallback(() => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
-  }, [setTheme]);
+    setThemeMode(prev => (prev === 'light' ? 'dark' : 'light'));
+  }, [setThemeMode]);
 
-  const handleSetTheme = useCallback((newTheme: Theme) => setTheme(newTheme), [setTheme]);
-  const handleSetLayout = useCallback((newLayout: Layout) => setLayout(newLayout), [setLayout]);
-  const handleSetPrimaryColor = useCallback((color: string) => setPrimaryColor(color), [setPrimaryColor]);
+  const handleSetThemeMode = useCallback((mode: ThemeMode) => setThemeMode(mode), [setThemeMode]);
+  const handleSetLayout = useCallback((l: Layout) => setLayout(l), [setLayout]);
+  const handleSetCustomColors = useCallback((colors: CustomThemeColors) => setCustomColors(colors), [setCustomColors]);
+  
+  const handleSetPrimaryColor = useCallback((color: string) => {
+    setCustomColors(prev => ({ ...prev, primary: color }));
+  }, [setCustomColors]);
+
   const handleSetCursorStyle = useCallback((style: string) => setCursorStyle(style), [setCursorStyle]);
 
   const value = useMemo(() => ({ 
-    theme, 
-    setTheme: handleSetTheme, 
+    themeMode,
+    setThemeMode: handleSetThemeMode,
+    theme: themeMode === 'dark' ? 'dark' : 'light',
+    setTheme: (t: 'light' | 'dark') => setThemeMode(t),
     layout, 
     setLayout: handleSetLayout, 
     toggleTheme,
-    primaryColor,
+    customColors,
+    setCustomColors: handleSetCustomColors,
+    primaryColor: customColors.primary,
     setPrimaryColor: handleSetPrimaryColor,
     cursorStyle,
     setCursorStyle: handleSetCursorStyle
-  }), [theme, handleSetTheme, layout, handleSetLayout, toggleTheme, primaryColor, handleSetPrimaryColor, cursorStyle, handleSetCursorStyle]);
+  }), [themeMode, handleSetThemeMode, layout, handleSetLayout, toggleTheme, customColors, handleSetCustomColors, handleSetPrimaryColor, cursorStyle, handleSetCursorStyle]);
 
   return (
     <ThemeContext.Provider value={value}>

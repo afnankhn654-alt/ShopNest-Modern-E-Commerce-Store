@@ -111,6 +111,39 @@
         animation: gradient-x 15s ease infinite;
       }
 
+      /* High Contrast Mode Overrides */
+      .high-contrast {
+        --color-primary-50: 0 0 0;
+        --color-primary-100: 255 255 0;
+        --color-primary-200: 255 255 0;
+        --color-primary-300: 255 255 0;
+        --color-primary-400: 255 255 0;
+        --color-primary-500: 255 255 0;
+        --color-primary-600: 200 200 0;
+        --color-primary-700: 255 255 255;
+        --color-primary-800: 255 255 255;
+        --color-primary-900: 255 255 255;
+        --color-primary-950: 255 255 255;
+      }
+
+      .high-contrast body {
+        background-color: #000 !important;
+        color: #fff !important;
+      }
+      
+      .high-contrast .bg-white, .high-contrast .dark\:bg-gray-800, .high-contrast .bg-gray-50, .high-contrast .dark\:bg-gray-900 {
+        background-color: #000 !important;
+        border: 2px solid #fff !important;
+      }
+      
+      .high-contrast .text-gray-900, .high-contrast .text-gray-800, .high-contrast .dark\:text-white {
+        color: #fff !important;
+      }
+      
+      .high-contrast .text-gray-500, .high-contrast .text-gray-600 {
+        color: #ffff00 !important;
+      }
+
       /* Loader Bar Transition */
       .loader-bar {
         transition: width 0.2s ease-in-out, opacity 0.4s ease-in-out;
@@ -183,7 +216,7 @@
         scroll-snap-align: center;
       }
 
-      /* Custom Cursors */
+      /* Custom Cursors - PC Only Feature Support */
       body.cursor-retro { cursor: url('https://cur.cursors-4u.net/others/oth-6/oth599.cur'), auto !important; }
       body.cursor-retro a, body.cursor-retro button { cursor: url('https://cur.cursors-4u.net/others/oth-6/oth599.cur'), pointer !important; }
 
@@ -192,6 +225,18 @@
       
       body.cursor-minimal { cursor: crosshair !important; }
       body.cursor-minimal a, body.cursor-minimal button { cursor: crosshair !important; }
+
+      body.cursor-fantasy { cursor: url('https://cur.cursors-4u.net/games/gam-13/gam1282.cur'), auto !important; }
+      body.cursor-fantasy a, body.cursor-fantasy button { cursor: url('https://cur.cursors-4u.net/games/gam-13/gam1282.cur'), pointer !important; }
+
+      body.cursor-modern { cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1054.cur'), auto !important; }
+      body.cursor-modern a, body.cursor-modern button { cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1054.cur'), pointer !important; }
+
+      body.cursor-scifi { cursor: url('https://cur.cursors-4u.net/mechanics/mec-2/mec188.cur'), auto !important; }
+      body.cursor-scifi a, body.cursor-scifi button { cursor: url('https://cur.cursors-4u.net/mechanics/mec-2/mec188.cur'), pointer !important; }
+
+      body.cursor-nature { cursor: url('https://cur.cursors-4u.net/nature/nat-2/nat198.cur'), auto !important; }
+      body.cursor-nature a, body.cursor-nature button { cursor: url('https://cur.cursors-4u.net/nature/nat-2/nat198.cur'), pointer !important; }
 
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/heroicons/2.0.18/24/outline/heroicons.min.css" rel="stylesheet">
