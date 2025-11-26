@@ -31,6 +31,11 @@ interface ThemeContextType {
 
   cursorStyle: string;
   setCursorStyle: (style: string) => void;
+
+  // FIX: Add `theme` and `setTheme` to match the value provided by the context provider.
+  // This resolves the error in Header.tsx which consumes the `theme` property.
+  theme: 'light' | 'dark';
+  setTheme: (t: 'light' | 'dark') => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

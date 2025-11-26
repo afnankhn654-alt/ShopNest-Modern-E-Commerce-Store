@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
 import { LocationProvider } from './contexts/LocationContext';
@@ -13,10 +13,10 @@ import BottomNavBar from './components/BottomNavBar';
 import MobileLayout from './components/MobileLayout';
 import TopLoader from './components/TopLoader';
 import Spinner from './components/Spinner';
+import OnboardingModal from './components/OnboardingModal';
 
 const { HashRouter, Routes, Route, useLocation } = ReactRouterDOM as any;
 
-// Lazy load pages to split the bundle and improve initial load performance
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ProductListPage = lazy(() => import('./pages/ProductListPage'));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'));
@@ -28,8 +28,6 @@ const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 const SearchResultsPage = lazy(() => import('./pages/SearchResultsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const InfoPage = lazy(() => import('./pages/InfoPage'));
-
-// --- Layout Wrapper Components ---
 
 const DesktopLayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="flex flex-col min-h-screen animate-gradient-bg text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -44,16 +42,13 @@ const DesktopLayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 };
 
 const AppContent: React.FC = () => {
   const { isDesktop } = useDeviceDetection();
+  const { isNewGoogleUser, completeGoogleOnboarding } = useAuth();
 
   const RoutesContent = (
     <Suspense 
@@ -74,18 +69,12 @@ const AppContent: React.FC = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
-        
-        {/* Creative About Page */}
         <Route path="/about" element={<AboutPage />} />
-
-        {/* Info Pages - Get to Know Us */}
         <Route path="/careers" element={<InfoPage title="Careers" contentKey="careers" />} />
         <Route path="/blog" element={<InfoPage title="ShopNest Blog" />} />
         <Route path="/investors" element={<InfoPage title="Investor Relations" contentKey="investors" />} />
         <Route path="/devices" element={<InfoPage title="ShopNest Devices" />} />
         <Route path="/science" element={<InfoPage title="ShopNest Science" />} />
-
-        {/* Info Pages - Make Money with Us */}
         <Route path="/sell" element={<InfoPage title="Sell Products on ShopNest" />} />
         <Route path="/sell-business" element={<InfoPage title="Sell on ShopNest Business" />} />
         <Route path="/sell-apps" element={<InfoPage title="Sell Apps on ShopNest" />} />
@@ -93,30 +82,31 @@ const AppContent: React.FC = () => {
         <Route path="/advertise" element={<InfoPage title="Advertise Your Products" />} />
         <Route path="/self-publish" element={<InfoPage title="Self-Publish with Us" />} />
         <Route path="/host-hub" element={<InfoPage title="Host a ShopNest Hub" />} />
-
-        {/* Info Pages - Payment Products */}
         <Route path="/business-card" element={<InfoPage title="ShopNest Business Card" />} />
         <Route path="/shop-with-points" element={<InfoPage title="Shop with Points" />} />
         <Route path="/reload-balance" element={<InfoPage title="Reload Your Balance" />} />
         <Route path="/currency-converter" element={<InfoPage title="ShopNest Currency Converter" />} />
-
-        {/* Info Pages - Help & Settings */}
         <Route path="/covid-19" element={<InfoPage title="ShopNest and COVID-19" />} />
         <Route path="/shipping" element={<InfoPage title="Shipping Rates & Policies" />} />
         <Route path="/returns" element={<InfoPage title="Returns & Replacements" />} />
         <Route path="/content-devices" element={<InfoPage title="Manage Your Content and Devices" />} />
         <Route path="/help" element={<InfoPage title="Help Center" contentKey="help" />} />
-        
       </Routes>
     </Suspense>
   );
 
-  if (isDesktop) {
-    return <DesktopLayoutWrapper>{RoutesContent}</DesktopLayoutWrapper>;
-  } else {
-    // Mobile/Tablet Creative UI
-    return <MobileLayout>{RoutesContent}</MobileLayout>;
-  }
+  const mainContent = isDesktop ? (
+    <DesktopLayoutWrapper>{RoutesContent}</DesktopLayoutWrapper>
+  ) : (
+    <MobileLayout>{RoutesContent}</MobileLayout>
+  );
+  
+  return (
+    <>
+      <OnboardingModal isOpen={isNewGoogleUser} onClose={completeGoogleOnboarding} />
+      {mainContent}
+    </>
+  );
 };
 
 const App: React.FC = () => {

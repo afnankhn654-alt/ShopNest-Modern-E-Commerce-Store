@@ -76,6 +76,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  photoURL?: string | null;
 }
 
 export type Theme = 'light' | 'dark';

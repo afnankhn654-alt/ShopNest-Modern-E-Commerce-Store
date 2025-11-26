@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme, ThemeMode, CustomThemeColors } from '../contexts/ThemeContext';
 import { useDeviceDetection } from '../hooks/useDeviceDetection';
+import UserAvatar from '../components/UserAvatar';
 import * as ReactRouterDOM from 'react-router-dom';
 import { 
     SunIcon, MoonIcon, Squares2X2Icon, Bars3Icon, HeartIcon, 
@@ -45,7 +46,6 @@ const ProfilePage: React.FC = () => {
   
   const navigate = useNavigate();
 
-  // Local state for color pickers to avoid excessive re-renders during drag
   const [localCustomColors, setLocalCustomColors] = useState<CustomThemeColors>(customColors);
 
   useEffect(() => {
@@ -54,7 +54,6 @@ const ProfilePage: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Sync local state when context changes (e.g. initial load)
   useEffect(() => {
     setLocalCustomColors(customColors);
   }, [customColors]);
@@ -62,9 +61,9 @@ const ProfilePage: React.FC = () => {
   const handleColorChange = (key: keyof CustomThemeColors, value: string) => {
       const newColors = { ...localCustomColors, [key]: value };
       setLocalCustomColors(newColors);
-      setCustomColors(newColors); // Real-time apply
+      setCustomColors(newColors);
       if (themeMode !== 'custom') {
-          setThemeMode('custom'); // Auto-switch to custom mode if editing colors
+          setThemeMode('custom');
       }
   };
 
@@ -86,7 +85,7 @@ const ProfilePage: React.FC = () => {
               {/* User Header */}
               <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 border-b border-gray-200 dark:border-gray-700 pb-8">
                   <div className="flex-shrink-0 relative group">
-                      <img className="h-24 w-24 rounded-full border-4 border-primary-100 dark:border-primary-900 object-cover" src={`https://i.pravatar.cc/150?u=${user.email}`} alt="User avatar" />
+                      <UserAvatar user={user} size="h-24 w-24" text="text-3xl" />
                       <div className="absolute bottom-0 right-0 bg-green-500 w-5 h-5 rounded-full border-2 border-white dark:border-gray-800"></div>
                   </div>
                   <div className="flex-1 text-center sm:text-left">
@@ -149,7 +148,6 @@ const ProfilePage: React.FC = () => {
                               ))}
                           </div>
 
-                          {/* Helper Text for High Contrast */}
                           {themeMode === 'high-contrast' && (
                               <div className="mt-4 p-3 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 text-xs rounded-lg flex items-start gap-2">
                                   <EyeIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />
@@ -195,7 +193,6 @@ const ProfilePage: React.FC = () => {
                                 )}
                            </div>
                            
-                           {/* Quick Presets */}
                            <div className="flex flex-wrap gap-3 mb-6">
                                {PREDEFINED_PALETTES.map((t) => (
                                    <button
@@ -210,7 +207,6 @@ const ProfilePage: React.FC = () => {
                                ))}
                            </div>
 
-                           {/* Detailed Pickers */}
                            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Primary Color</label>
@@ -275,7 +271,6 @@ const ProfilePage: React.FC = () => {
                            </div>
                       </div>
 
-                      {/* 4. Cursor Selection (Desktop Only) */}
                       {isDesktop && (
                         <div className="lg:col-span-2 bg-gray-50 dark:bg-gray-900/50 p-6 rounded-2xl border border-gray-200 dark:border-gray-700">
                              <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">

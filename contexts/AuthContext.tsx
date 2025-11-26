@@ -8,7 +8,8 @@ import {
   onAuthStateChanged,
   updateProfile,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  getAdditionalUserInfo
 } from 'firebase/auth';
 import Spinner from '../components/Spinner';
 
@@ -16,17 +17,21 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   loading: boolean;
+  isNewGoogleUser: boolean;
   login: (email: string, pass: string) => Promise<void>;
   signup: (name: string, email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
   loginWithGoogle: () => Promise<void>;
+  updateUserName: (name: string) => Promise<void>;
+  completeGoogleOnboarding: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true); // To check auth status on initial load
+  const [loading, setLoading] = useState(true);
+  const [isNewGoogleUser, setIsNewGoogleUser] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -36,6 +41,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           id: firebaseUser.uid,
           name: firebaseUser.displayName || 'User',
           email: firebaseUser.email || '',
+          photoURL: firebaseUser.photoURL,
         };
         setUser(appUser);
       } else {
@@ -45,7 +51,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setLoading(false); // Auth state determined
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
@@ -56,17 +61,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signup = async (name: string, email: string, pass: string) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
     if (userCredential.user) {
-      // Update the user's profile with their name
       await updateProfile(userCredential.user, {
         displayName: name,
       });
-      // The onAuthStateChanged listener will automatically update the user state,
-      // but we can manually set it here for immediate feedback.
-       setUser({
-           id: userCredential.user.uid,
-           name: name,
-           email: email
-       });
+      setUser({
+        id: userCredential.user.uid,
+        name: name,
+        email: email,
+        photoURL: null,
+      });
+    }
+  };
+  
+  const updateUserName = async (name: string) => {
+    if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+            displayName: name,
+        });
+        // The onAuthStateChanged listener will automatically pick up the change
+        // but we can update state immediately for better UX
+        setUser(prev => prev ? { ...prev, name } : null);
     }
   };
 
@@ -76,10 +90,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, provider);
+    const additionalInfo = getAdditionalUserInfo(result);
+    // If it's a new user and they don't have a display name set somehow
+    if (additionalInfo?.isNewUser && !result.user.displayName) {
+        setIsNewGoogleUser(true);
+    }
+  };
+  
+  const completeGoogleOnboarding = () => {
+    setIsNewGoogleUser(false);
   };
 
-  const value = { user, isAuthenticated: !!user, loading, login, signup, logout, loginWithGoogle };
+  const value = { user, isAuthenticated: !!user, loading, isNewGoogleUser, login, signup, logout, loginWithGoogle, updateUserName, completeGoogleOnboarding };
 
   return (
     <AuthContext.Provider value={value}>
