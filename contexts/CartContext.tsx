@@ -21,6 +21,7 @@ interface CartContextType {
   cartTotal: number;
   isAuthPromptOpen: boolean;
   closeAuthPrompt: () => void;
+  addToGuestCart: (product: Product, variant: Variant, quantity: number) => void;
   getPendingAction: () => PendingAction;
   executePendingAction: () => void;
   clearPendingAction: () => void;
@@ -118,6 +119,25 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem('guest_cart', JSON.stringify(deHydrateCart(newCartItems)));
   };
 
+  const addToGuestCart = (product: Product, variant: Variant, quantity: number) => {
+    // Get current guest cart from localStorage, update it, and save back.
+    const localGuestCart = JSON.parse(localStorage.getItem('guest_cart') || '[]') as StoredCartItem[];
+    const hydrated = hydrateCart(localGuestCart);
+    
+    const existingItem = hydrated.find(item => item.variant.variant_id === variant.variant_id);
+    let newItems;
+    if (existingItem) {
+      newItems = hydrated.map(item =>
+        item.variant.variant_id === variant.variant_id
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      );
+    } else {
+      newItems = [...hydrated, { product, variant, quantity }];
+    }
+    handleGuestCartUpdate(newItems);
+  };
+
   const handleUserCartUpdate = (newCartItems: CartItem[]) => {
       setCartItems(newCartItems);
       if (user) {
@@ -197,7 +217,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const getPendingAction = () => pendingAction;
   const clearPendingAction = () => setPendingAction(null);
   const executePendingAction = () => {
-    if(pendingAction?.type === 'ADD_TO_CART') {
+    if(pendingAction?.type === 'ADD_TO_CART' && pendingAction.quantity > 0) { // Ensure it's not a wishlist trigger
         const { product, variant, quantity } = pendingAction;
         // Re-call addToCart now that user is logged in
         addToCart(product, variant, quantity);
@@ -214,11 +234,12 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     cartCount, 
     cartTotal,
     isAuthPromptOpen,
+    addToGuestCart,
     closeAuthPrompt,
     getPendingAction,
     executePendingAction,
     clearPendingAction
-  }), [cartItems, addToCart, removeFromCart, updateQuantity, clearCart, cartCount, cartTotal, isAuthPromptOpen]);
+  }), [cartItems, addToCart, removeFromCart, updateQuantity, clearCart, cartCount, cartTotal, isAuthPromptOpen, addToGuestCart]);
 
   return (
     <CartContext.Provider value={value}>

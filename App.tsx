@@ -31,6 +31,7 @@ const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 const SearchResultsPage = lazy(() => import('./pages/SearchResultsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const InfoPage = lazy(() => import('./pages/InfoPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 const DesktopLayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="flex flex-col min-h-screen animate-gradient-bg text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -94,6 +95,7 @@ const AppContent: React.FC = () => {
         <Route path="/returns" element={<InfoPage title="Returns & Replacements" />} />
         <Route path="/content-devices" element={<InfoPage title="Manage Your Content and Devices" />} />
         <Route path="/help" element={<InfoPage title="Help Center" contentKey="help" />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
   );

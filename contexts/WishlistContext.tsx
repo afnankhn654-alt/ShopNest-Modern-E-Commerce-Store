@@ -15,6 +15,7 @@ interface WishlistContextType {
   addToWishlist: (product: Product) => void;
   removeFromWishlist: (productId: string) => void;
   isInWishlist: (productId: string) => boolean;
+  addToGuestWishlist: (product: Product) => void;
   wishlistCount: number;
 }
 
@@ -24,9 +25,7 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [wishlistItems, setWishlistItems] = useState<Product[]>([]);
   const { user, loading: authLoading } = useAuth();
   const { getUserData, updateUserWishlist } = useUserData();
-
-  // We'll reuse the cart's modal for simplicity, but manage our own pending action
-  const { isAuthPromptOpen, closeAuthPrompt, getPendingAction: getCartPendingAction, executePendingAction: executeCartAction, clearPendingAction: clearCartAction } = useCart();
+  const { addToCart: triggerAuthPromptModal, getPendingAction: getCartPendingAction, executePendingAction: executeCartAction, clearPendingAction: clearCartAction } = useCart();
   const [pendingWishlistAction, setPendingWishlistAction] = useState<PendingAction>(null);
 
 
@@ -100,6 +99,17 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
       localStorage.setItem('guest_wishlist', JSON.stringify(deHydrateWishlist(newItems)));
   };
 
+  const addToGuestWishlist = (product: Product) => {
+    setWishlistItems(prevItems => {
+        if (prevItems.some(item => item.id === product.id)) {
+            return prevItems;
+        }
+        const newItems = [...prevItems, product];
+        handleGuestWishlistUpdate(newItems);
+        return newItems;
+    });
+  };
+
   const handleUserWishlistUpdate = (newItems: Product[]) => {
       setWishlistItems(newItems);
       if (user) {
@@ -110,9 +120,8 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
   const addToWishlist = useCallback((product: Product) => {
     if (!user) {
       setPendingWishlistAction({ type: 'ADD_TO_WISHLIST', product });
-      // Trigger the cart's modal
-      useCart().addToCart(product, product.variants[0], 0); 
-      return;
+      triggerAuthPromptModal(product, product.variants[0], 0);
+      return
     }
 
     const updater = (prevItems: Product[]) => {
@@ -121,7 +130,7 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
     };
     handleUserWishlistUpdate(updater(wishlistItems));
 
-  }, [user, wishlistItems]);
+  }, [user, wishlistItems, triggerAuthPromptModal]);
 
 
   const removeFromWishlist = useCallback((productId: string) => {
@@ -144,8 +153,9 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
     addToWishlist, 
     removeFromWishlist, 
     isInWishlist, 
-    wishlistCount 
-  }), [wishlistItems, addToWishlist, removeFromWishlist, isInWishlist, wishlistCount]);
+    wishlistCount,
+    addToGuestWishlist
+  }), [wishlistItems, addToWishlist, removeFromWishlist, isInWishlist, wishlistCount, addToGuestWishlist]);
 
 
   return (

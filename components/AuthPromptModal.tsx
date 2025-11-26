@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useCart } from '../contexts/CartContext';
+import { useWishlist } from '../contexts/WishlistContext';
 import { useAuth } from '../contexts/AuthContext';
 import { LockClosedIcon, SparklesIcon } from '@heroicons/react/24/outline';
 
@@ -14,7 +15,8 @@ const GoogleIcon = () => (
 
 
 const AuthPromptModal: React.FC = () => {
-    const { isAuthPromptOpen, closeAuthPrompt, getPendingAction, executePendingAction, clearPendingAction } = useCart();
+    const { isAuthPromptOpen, closeAuthPrompt, getPendingAction, executePendingAction, clearPendingAction, addToGuestCart } = useCart();
+    const { addToGuestWishlist } = useWishlist();
     const { loginWithGoogle, user, loading } = useAuth();
     const pendingAction = getPendingAction();
 
@@ -24,7 +26,7 @@ const AuthPromptModal: React.FC = () => {
             clearPendingAction();
             closeAuthPrompt();
         }
-    }, [user, isAuthPromptOpen, loading]);
+    }, [user, isAuthPromptOpen, loading, executePendingAction, clearPendingAction, closeAuthPrompt]);
     
     const handleGoogleSignIn = async () => {
         try {
@@ -38,6 +40,19 @@ const AuthPromptModal: React.FC = () => {
     if (!isAuthPromptOpen || !pendingAction) return null;
 
     const product = pendingAction.product;
+
+    const handleMaybeLater = () => {
+        // This is the core logic change
+        if (pendingAction.quantity === 0) {
+            // This was a wishlist action, identified by the zero quantity hack
+            addToGuestWishlist(product);
+        } else {
+            // This was a real cart action
+            addToGuestCart(pendingAction.product, pendingAction.variant, pendingAction.quantity);
+        }
+        clearPendingAction();
+        closeAuthPrompt();
+    };
 
     return (
         <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-lg z-[100] flex items-center justify-center p-4 animate-fade-in">
@@ -77,11 +92,7 @@ const AuthPromptModal: React.FC = () => {
 
                     <div className="mt-6">
                         <button
-                            onClick={() => {
-                                // For now, just close. A more advanced implementation might add to a temporary guest cart.
-                                clearPendingAction();
-                                closeAuthPrompt();
-                            }}
+                            onClick={handleMaybeLater}
                             className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:underline"
                         >
                             Maybe later
