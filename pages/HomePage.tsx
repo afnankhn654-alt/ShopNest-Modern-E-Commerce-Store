@@ -157,7 +157,7 @@ const CreativeMobileHome: React.FC<{ products: Product[], regionCode: string }> 
          <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-4">Just For You</h3>
          <div className="grid grid-cols-2 gap-4">
              {forYou.map((p) => (
-                 <ProductCard key={p.id} product={p} />
+                 <ProductCard key={p.id} product={p} isSimple={true} />
              ))}
          </div>
       </div>
@@ -357,7 +357,7 @@ const HomePage: React.FC = () => {
                 <div className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide">
                     {trending.length > 0 ? trending.map(product => (
                         <div key={product.id} className="min-w-[200px] md:min-w-[240px]">
-                            <ProductCard product={product} />
+                            <ProductCard product={product} isSimple={true} />
                         </div>
                     )) : (
                         <div className="text-gray-500">No trending products found.</div>
@@ -371,7 +371,7 @@ const HomePage: React.FC = () => {
             <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Recommended for You</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                  {allProducts.filter((_, i) => i % 2 === 0).slice(0, 8).map(product => (
-                      <ProductCard key={`rec-${product.id}`} product={product} />
+                      <ProductCard key={`rec-${product.id}`} product={product} isSimple={true} />
                  ))}
             </div>
         </div>
@@ -389,7 +389,7 @@ const HomePage: React.FC = () => {
                  </div>
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                     {section.products.map(product => (
-                        <ProductCard key={`cat-${section.name}-${product.id}`} product={product} />
+                        <ProductCard key={`cat-${section.name}-${product.id}`} product={product} isSimple={true} />
                     ))}
                  </div>
              </div>

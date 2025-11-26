@@ -9,6 +9,7 @@ import { useCart } from '../contexts/CartContext';
 import { useWishlist } from '../contexts/WishlistContext';
 import { useLocation } from '../contexts/LocationContext';
 import { useLoading } from '../contexts/LoadingContext';
+import { useNotification } from '../contexts/NotificationContext';
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/24/solid';
 import { HeartIcon as HeartIconOutline, EyeIcon, HandThumbUpIcon, CheckBadgeIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
@@ -31,6 +32,7 @@ const ProductDetailPage: React.FC = () => {
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { formatPrice } = useLocation();
   const { startLoading, stopLoading } = useLoading();
+  const { addNotification } = useNotification();
 
   // Social Proof Effect
   useEffect(() => {
@@ -86,7 +88,12 @@ const ProductDetailPage: React.FC = () => {
   const handleAddToCart = () => {
     if (product && selectedVariant) {
       addToCart(product, selectedVariant, quantity);
-      alert(`${quantity} of ${product.title} (${Object.values(selectedVariant.options).join(', ')}) added to cart!`);
+      addNotification({
+        type: 'success',
+        title: 'Added to Cart!',
+        message: `${quantity} x ${product.title}`,
+        productImage: product.images[0].image_url
+      });
     }
   };
   

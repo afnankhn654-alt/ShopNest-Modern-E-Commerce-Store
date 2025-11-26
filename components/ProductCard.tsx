@@ -13,9 +13,10 @@ const { Link } = ReactRouterDOM as any;
 
 interface ProductCardProps {
   product: Product;
+  isSimple?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) => {
   const { layout } = useTheme();
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { formatPrice } = useLocation();
@@ -54,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   // Optimize image size for cards (600px is enough for high DPI screens @ 300px display width)
   const displayImage = getOptimizedImageUrl(product.images[0].image_url, 600);
 
-  if (layout === 'list') {
+  if (layout === 'list' && !isSimple) {
     return (
       <div className="relative flex flex-col sm:flex-row items-start bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full">
         {WishlistButton}
@@ -108,15 +109,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {WishlistButton}
         </div>
         <Link to={`/product/${product.id}`}>
-        <div className="p-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{product.brand}</p>
-          <h3 className="mt-1 font-semibold text-lg text-gray-800 dark:text-gray-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 truncate">{product.title}</h3>
-          {AiInsightBanner}
-          <div className="mt-2 flex justify-between items-center">
-            <p className="text-xl font-bold text-primary-600 dark:text-primary-400">{formatPrice(product.final_price)}</p>
-            <Rating rating={product.rating} />
+        {isSimple ? (
+          <div className="p-4">
+            <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 truncate">{product.title}</h3>
+            <p className="mt-2 text-xl font-bold text-primary-600 dark:text-primary-400">{formatPrice(product.final_price)}</p>
           </div>
-        </div>
+        ) : (
+          <div className="p-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400">{product.brand}</p>
+            <h3 className="mt-1 font-semibold text-lg text-gray-800 dark:text-gray-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 truncate">{product.title}</h3>
+            {AiInsightBanner}
+            <div className="mt-2 flex justify-between items-center">
+              <p className="text-xl font-bold text-primary-600 dark:text-primary-400">{formatPrice(product.final_price)}</p>
+              <Rating rating={product.rating} />
+            </div>
+          </div>
+        )}
       </Link>
     </div>
   );

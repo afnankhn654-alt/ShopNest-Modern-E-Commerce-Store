@@ -92,3 +92,12 @@ export interface Region {
   locale: string;
   continent?: string; // 'NA', 'EU', 'AS', etc.
 }
+
+export interface Notification {
+  id: number;
+  type: 'success' | 'error' | 'info';
+  title: string;
+  message: string;
+  productImage?: string;
+  duration?: number;
+}

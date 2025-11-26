@@ -6,6 +6,7 @@ import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
 import { LocationProvider } from './contexts/LocationContext';
 import { LoadingProvider } from './contexts/LoadingContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 import { useDeviceDetection } from './hooks/useDeviceDetection';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -14,6 +15,7 @@ import MobileLayout from './components/MobileLayout';
 import TopLoader from './components/TopLoader';
 import Spinner from './components/Spinner';
 import OnboardingModal from './components/OnboardingModal';
+import NotificationHost from './components/NotificationHost';
 
 const { HashRouter, Routes, Route, useLocation } = ReactRouterDOM as any;
 
@@ -117,11 +119,14 @@ const App: React.FC = () => {
           <AuthProvider>
             <CartProvider>
               <WishlistProvider>
-                <HashRouter>
-                  <ScrollToTop />
-                  <TopLoader />
-                  <AppContent />
-                </HashRouter>
+                <NotificationProvider>
+                  <HashRouter>
+                    <ScrollToTop />
+                    <TopLoader />
+                    <NotificationHost />
+                    <AppContent />
+                  </HashRouter>
+                </NotificationProvider>
               </WishlistProvider>
             </CartProvider>
           </AuthProvider>

@@ -3,6 +3,7 @@ import * as ReactRouterDOM from 'react-router-dom';
 import { useWishlist } from '../contexts/WishlistContext';
 import { useCart } from '../contexts/CartContext';
 import { useLocation } from '../contexts/LocationContext';
+import { useNotification } from '../contexts/NotificationContext';
 import { Product } from '../types';
 import { HeartIcon, TrashIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 
@@ -12,16 +13,25 @@ const WishlistPage: React.FC = () => {
   const { wishlistItems, removeFromWishlist } = useWishlist();
   const { addToCart } = useCart();
   const { formatPrice } = useLocation();
+  const { addNotification } = useNotification();
 
   const handleMoveToCart = (product: Product) => {
-    // Adds the first variant to the cart for simplicity.
-    // A real app might show a modal to select variants.
     const variant = product.variants[0];
     if (variant) {
       addToCart(product, variant, 1);
       removeFromWishlist(product.id);
+      addNotification({
+        type: 'success',
+        title: 'Moved to Cart!',
+        message: `${product.title}`,
+        productImage: product.images[0].image_url
+      });
     } else {
-        alert("This product has no variants available to add to cart.");
+        addNotification({
+            type: 'error',
+            title: 'Action Failed',
+            message: 'This product has no variants to add to cart.',
+        });
     }
   };
 

@@ -1,4 +1,3 @@
-
 import { Product } from '../types';
 
 const originalProducts: Product[] = [
@@ -671,6 +670,42 @@ const originalProducts: Product[] = [
             { "image_url": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?q=80&w=2000", "alt_text": "Toothbrush on bathroom sink counter" },
             { "image_url": "https://images.unsplash.com/photo-1600171542381-8b388653b45a?q=80&w=2000", "alt_text": "White electric toothbrush on charging stand" },
             { "image_url": "https://images.unsplash.com/photo-1553556014-9279dc074503?q=80&w=2000", "alt_text": "Person holding toothbrush ready to brush" }
+        ]
+    },
+    {
+        "id": "prod-0021",
+        "title": "ArcticFlex Winter Beanie & Scarf Set",
+        "short_description": "Stay warm and stylish with this 2-in-1 fleece-lined knit beanie and neck warmer set.",
+        "long_description": "Embrace the cold with the ArcticFlex Beanie & Scarf Set. This multi-functional combo is crafted from high-quality, pilling-resistant acrylic fabric and features a full, ultra-soft fleece lining for maximum warmth and wind protection. The versatile design allows you to wear it as a beanie, a neck warmer, or a full-face mask. Finished with a simple and fashionable leather and hardware logo accent, this unisex set is perfect for any occasion, from casual outings to business commutes.",
+        "category": "Fashion",
+        "subcategory": "Accessories",
+        "brand": "ArcticFlex",
+        "price": 24.99,
+        "currency": "USD",
+        "discount_pct": 20,
+        "final_price": 19.99,
+        "stock_qty": 950,
+        "sku": "AF-WINTER-SET-01",
+        "tags": ["winter", "beanie", "scarf", "unisex", "warm", "fleece", "hat"],
+        "rating": 4.8,
+        "reviews_count": 580,
+        "created_at": "2024-10-15T11:00:00Z",
+        "is_trending": true,
+        "popularity_score": 95,
+        "sales_7d": 350,
+        "views_7d": 4500,
+        "add_to_cart_7d": 600,
+        "variants": [
+            { "variant_id": "v-prod-0021-1", "options": { "color": "Black" }, "price": 19.99, "stock_qty": 300, "sku": "AF-SET-01-BLK" },
+            { "variant_id": "v-prod-0021-2", "options": { "color": "Charcoal Gray" }, "price": 19.99, "stock_qty": 250, "sku": "AF-SET-01-GRY" },
+            { "variant_id": "v-prod-0021-3", "options": { "color": "Light Gray" }, "price": 19.99, "stock_qty": 200, "sku": "AF-SET-01-LGR" },
+            { "variant_id": "v-prod-0021-4", "options": { "color": "Navy Blue" }, "price": 19.99, "stock_qty": 200, "sku": "AF-SET-01-NAV" }
+        ],
+        "images": [
+            { "image_url": "https://images.unsplash.com/photo-1610239327047a4687afc2?q=80&w=800", "alt_text": "Man wearing a charcoal gray beanie and neck warmer set" },
+            { "image_url": "https://images.unsplash.com/photo-1641379983404-54b98c73c2a6?q=80&w=800", "alt_text": "Black knit beanie and scarf set displayed flat" },
+            { "image_url": "https://images.unsplash.com/photo-1611352013349-b4b8d234f1e6?q=80&w=800", "alt_text": "Close-up of the thick fleece lining inside the beanie" },
+            { "image_url": "https://images.unsplash.com/photo-1612422596495-92798f060822?q=80&w=800", "alt_text": "A navy blue beanie on a wooden surface" }
         ]
     }
 ];

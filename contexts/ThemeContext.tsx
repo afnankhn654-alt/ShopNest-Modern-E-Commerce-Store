@@ -180,7 +180,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   const handleSetCursorStyle = useCallback((style: string) => setCursorStyle(style), [setCursorStyle]);
 
-  const value = useMemo(() => ({ 
+  // FIX: Explicitly type `value` to prevent TypeScript from incorrectly widening the `theme` property to `string`.
+  const value: ThemeContextType = useMemo(() => ({ 
     themeMode,
     setThemeMode: handleSetThemeMode,
     theme: themeMode === 'dark' ? 'dark' : 'light',
