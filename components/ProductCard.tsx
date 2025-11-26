@@ -150,7 +150,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
                     <div className="flex-shrink-0">
                         <Rating rating={product.rating} reviews_count={product.reviews_count} size="sm" />
                         <div className="mt-2">
-                            <span className="text-2xl font-extrabold text-primary-600 dark:text-primary-400">{formatPrice(product.final_price)}</span>
+                            <span className="text-2xl font-extrabold text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">{formatPrice(product.final_price)}</span>
                             {product.discount_pct > 0 && <span className="ml-2 text-sm text-gray-500 line-through">{formatPrice(product.price)}</span>}
                         </div>
                     </div>
@@ -198,7 +198,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
         {isSimple ? (
           <div className="p-4">
             <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 truncate">{product.title}</h3>
-            <p className="mt-2 text-xl font-bold text-primary-600 dark:text-primary-400">{formatPrice(product.final_price)}</p>
+            <p className="mt-2 text-xl font-bold text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">{formatPrice(product.final_price)}</p>
           </div>
         ) : (
           <div className="p-4">
@@ -206,7 +206,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
             <h3 className="mt-1 font-semibold text-lg text-gray-800 dark:text-gray-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 truncate">{product.title}</h3>
             {AiInsightBanner}
             <div className="mt-2 flex justify-between items-center">
-              <p className="text-xl font-bold text-primary-600 dark:text-primary-400">{formatPrice(product.final_price)}</p>
+              <p className="text-xl font-bold text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">{formatPrice(product.final_price)}</p>
               <Rating rating={product.rating} />
             </div>
           </div>
