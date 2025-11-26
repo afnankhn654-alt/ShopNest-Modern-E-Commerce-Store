@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
     ],
     "Let Us Help You": [
       { name: "Your Account", path: "/profile" },
-      { name: "Your Orders", path: "/profile" },
+      { name: "Your Orders", path: "/orders" },
       { name: "Shipping Rates & Policies", path: "/shipping" },
       { name: "Returns & Replacements", path: "/returns" },
       { name: "Manage Your Content and Devices", path: "/content-devices" },

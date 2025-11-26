@@ -1,4 +1,3 @@
-
 export interface Image {
   image_url: string;
   alt_text: string;
@@ -108,4 +107,37 @@ export interface Notification {
   message: string;
   productImage?: string;
   duration?: number;
+}
+
+// Order Management Types
+export type OrderStatus = 'Processing' | 'Shipped' | 'Out for Delivery' | 'Delivered' | 'Cancelled' | 'Returned';
+
+export interface OrderItem {
+  product_id: string;
+  variant_id: string;
+  title: string;
+  variant_options: Record<string, string>;
+  image_url: string;
+  quantity: number;
+  price: number;
+}
+
+export interface TrackingEvent {
+  status: string;
+  location: string;
+  date: string;
+  isCurrent: boolean;
+}
+
+export interface Order {
+  id: string;
+  date: string;
+  status: OrderStatus;
+  total_amount: number;
+  item_count: number;
+  items: OrderItem[];
+  shipping_address: string;
+  tracking_number: string;
+  estimated_delivery: string;
+  tracking_history: TrackingEvent[];
 }

@@ -8,7 +8,7 @@ import {
     SunIcon, MoonIcon, Squares2X2Icon, Bars3Icon, HeartIcon, 
     ChevronRightIcon, PaintBrushIcon, CursorArrowRaysIcon, 
     CheckIcon, EyeIcon, SwatchIcon, SparklesIcon,
-    ComputerDesktopIcon
+    ComputerDesktopIcon, ArchiveBoxIcon
 } from '@heroicons/react/24/outline';
 
 const { useNavigate, Link } = ReactRouterDOM as any;
@@ -98,8 +98,17 @@ const ProfilePage: React.FC = () => {
                   </div>
               </div>
               
-              {/* Wishlist Link */}
-              <div className="mt-6">
+              {/* Quick Links Grid */}
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Link to="/orders" className="flex justify-between items-center p-4 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-800 hover:shadow-md transition-all border border-blue-100 dark:border-gray-600 group">
+                      <div className="flex items-center space-x-4">
+                          <div className="p-2 bg-white dark:bg-gray-900 rounded-full shadow-sm text-blue-500 group-hover:scale-110 transition-transform">
+                             <ArchiveBoxIcon className="h-6 w-6"/>
+                          </div>
+                          <span className="text-lg font-bold text-gray-900 dark:text-white">My Orders</span>
+                      </div>
+                      <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                   <Link to="/wishlist" className="flex justify-between items-center p-4 rounded-xl bg-gradient-to-r from-pink-50 to-purple-50 dark:from-gray-700 dark:to-gray-800 hover:shadow-md transition-all border border-pink-100 dark:border-gray-600 group">
                       <div className="flex items-center space-x-4">
                           <div className="p-2 bg-white dark:bg-gray-900 rounded-full shadow-sm text-pink-500 group-hover:scale-110 transition-transform">

@@ -42,10 +42,12 @@
               'slide-up': 'slide-up 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
               'fade-in': 'fade-in 0.3s ease-out',
               'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'pulse-strong': 'pulse-strong 2s ease-out infinite',
               'shimmer': 'shimmer 2s infinite linear',
               'float': 'float 3s ease-in-out infinite',
               'fadeInRight': 'fadeInRight 0.5s ease-out forwards',
               'fadeOutRight': 'fadeOutRight 0.5s ease-in forwards',
+              'draw-line': 'draw-line 1.5s ease-out forwards',
             },
             keyframes: {
               'gradient-x': {
@@ -86,6 +88,14 @@
               'fadeOutRight': {
                 '0%': { opacity: '1', transform: 'translateX(0)' },
                 '100%': { opacity: '0', transform: 'translateX(100%)' },
+              },
+              'pulse-strong': {
+                '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                '50%': { opacity: 0.8, transform: 'scale(1.1)' },
+              },
+              'draw-line': {
+                from: { 'stroke-dashoffset': 1000 },
+                to: { 'stroke-dashoffset': 0 },
               },
             }
           }

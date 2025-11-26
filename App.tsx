@@ -32,6 +32,7 @@ const SearchResultsPage = lazy(() => import('./pages/SearchResultsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const InfoPage = lazy(() => import('./pages/InfoPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const OrdersPage = lazy(() => import('./pages/OrdersPage'));
 
 const DesktopLayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="flex flex-col min-h-screen animate-gradient-bg text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -73,6 +74,7 @@ const AppContent: React.FC = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
+        <Route path="/orders" element={<OrdersPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/careers" element={<InfoPage title="Careers" contentKey="careers" />} />
         <Route path="/blog" element={<InfoPage title="ShopNest Blog" />} />
