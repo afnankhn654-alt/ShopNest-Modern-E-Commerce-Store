@@ -72,6 +72,14 @@ export interface CartItem {
   quantity: number;
 }
 
+export interface StoredCartItem {
+  productId: string;
+  variantId: string;
+  quantity: number;
+}
+
+export type StoredWishlistItem = string; // Just an array of product IDs
+
 export interface User {
   id: string;
   name: string;

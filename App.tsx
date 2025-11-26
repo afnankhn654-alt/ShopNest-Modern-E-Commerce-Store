@@ -16,6 +16,7 @@ import TopLoader from './components/TopLoader';
 import Spinner from './components/Spinner';
 import OnboardingModal from './components/OnboardingModal';
 import NotificationHost from './components/NotificationHost';
+import AuthPromptModal from './components/AuthPromptModal';
 
 const { HashRouter, Routes, Route, useLocation } = ReactRouterDOM as any;
 
@@ -106,6 +107,7 @@ const AppContent: React.FC = () => {
   return (
     <>
       <OnboardingModal isOpen={isNewGoogleUser} onClose={completeGoogleOnboarding} />
+      <AuthPromptModal />
       {mainContent}
     </>
   );
@@ -117,18 +119,18 @@ const App: React.FC = () => {
       <LoadingProvider>
         <LocationProvider>
           <AuthProvider>
-            <CartProvider>
-              <WishlistProvider>
-                <NotificationProvider>
+            <NotificationProvider>
+              <CartProvider>
+                <WishlistProvider>
                   <HashRouter>
                     <ScrollToTop />
                     <TopLoader />
                     <NotificationHost />
                     <AppContent />
                   </HashRouter>
-                </NotificationProvider>
-              </WishlistProvider>
-            </CartProvider>
+                </WishlistProvider>
+              </CartProvider>
+            </NotificationProvider>
           </AuthProvider>
         </LocationProvider>
       </LoadingProvider>
