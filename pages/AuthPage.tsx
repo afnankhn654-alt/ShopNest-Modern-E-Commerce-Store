@@ -31,9 +31,30 @@ const AuthPage: React.FC = () => {
       } else {
         await signup(name, email, password);
       }
-      navigate('/profile');
-    } catch (err) {
-      setError('Authentication failed. Please try again.');
+      // The redirect is handled by the useEffect in this component
+    } catch (err: any) {
+      let errorMessage = 'Authentication failed. Please check your credentials.';
+      if (err.code) {
+        switch (err.code) {
+          case 'auth/email-already-in-use':
+            errorMessage = 'This email is already registered. Please login.';
+            break;
+          case 'auth/invalid-email':
+            errorMessage = 'Please enter a valid email address.';
+            break;
+          case 'auth/weak-password':
+            errorMessage = 'Password should be at least 6 characters.';
+            break;
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+            errorMessage = 'Invalid email or password.';
+            break;
+          default:
+            console.error('Firebase Auth Error:', err);
+        }
+      }
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -99,7 +120,7 @@ const AuthPage: React.FC = () => {
                 className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
               />
             </div>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
             <div>
               <button
                 type="submit"
