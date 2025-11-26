@@ -3,6 +3,11 @@ import { products } from '../data/products';
 
 // --- MOCK DATA GENERATION ---
 
+const CITIES = ["New York", "London", "Tokyo", "Paris", "Sydney", "Los Angeles", "Berlin", "Toronto", "Singapore", "Dubai"];
+const COUNTRIES = ["USA", "UK", "Japan", "France", "Australia", "Germany", "Canada"];
+const STREETS = ["Innovation Blvd", "Market Street", "Ocean Ave", "Maple Drive", "Main Street", "Station Road", "Victoria Road"];
+const ORIGIN_FACILITIES = ["Shenzhen, CN", "Shanghai, CN", "Frankfurt, DE", "Los Angeles, USA", "Ho Chi Minh, VN"];
+
 // Helper to generate a random date in the past
 const randomPastDate = (daysAgo: number): Date => {
   const date = new Date();
@@ -11,7 +16,7 @@ const randomPastDate = (daysAgo: number): Date => {
 };
 
 // Helper to generate a realistic tracking history
-const generateTrackingHistory = (orderDate: Date, status: OrderStatus): TrackingEvent[] => {
+const generateTrackingHistory = (orderDate: Date, status: OrderStatus, destinationCity: string, originFacility: string): TrackingEvent[] => {
   const history: TrackingEvent[] = [];
   const now = new Date();
 
@@ -34,32 +39,35 @@ const generateTrackingHistory = (orderDate: Date, status: OrderStatus): Tracking
   processingDate.setHours(orderDate.getHours() + Math.floor(Math.random() * 6) + 1);
   addEvent(processingDate, "Global Distribution Center", "Processing");
 
-  if (status === 'Cancelled' || status === 'Returned') return history;
+  if (status === 'Cancelled' || status === 'Returned') {
+     history[0].isCurrent = true;
+     return history;
+  }
 
   // 3. Shipped
   const shippedDate = new Date(processingDate);
   shippedDate.setDate(processingDate.getDate() + Math.floor(Math.random() * 2));
-  addEvent(shippedDate, "Origin Facility, Shanghai", "Package Shipped");
+  addEvent(shippedDate, `Origin Facility, ${originFacility}`, "Package Shipped");
 
   if (status === 'Shipped') {
     history[history.length-1].isCurrent = true;
-    return history;
+    return history.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
   // 4. Out for Delivery
   const deliveryDate = new Date(shippedDate);
   deliveryDate.setDate(shippedDate.getDate() + Math.floor(Math.random() * 4) + 2);
-  addEvent(deliveryDate, "Local Hub, New York", "Out for Delivery");
+  addEvent(deliveryDate, `Local Hub, ${destinationCity}`, "Out for Delivery");
 
   if (status === 'Out for Delivery') {
      history[history.length-1].isCurrent = true;
-     return history;
+     return history.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
   
   // 5. Delivered
   const deliveredDate = new Date(deliveryDate);
   deliveredDate.setHours(deliveryDate.getHours() + Math.floor(Math.random() * 8) + 1);
-  addEvent(deliveredDate, "Customer Address, New York", "Delivered");
+  addEvent(deliveredDate, `Customer Address, ${destinationCity}`, "Delivered");
   
   if (status === 'Delivered') {
       history[history.length-1].isCurrent = true;
@@ -70,8 +78,14 @@ const generateTrackingHistory = (orderDate: Date, status: OrderStatus): Tracking
 
 const generateRandomItems = (count: number): OrderItem[] => {
     const items: OrderItem[] = [];
+    const usedProductIds = new Set();
     for (let i = 0; i < count; i++) {
-        const product = products[Math.floor(Math.random() * products.length)];
+        let product;
+        do {
+            product = products[Math.floor(Math.random() * products.length)];
+        } while (usedProductIds.has(product.id));
+        usedProductIds.add(product.id);
+        
         const variant = product.variants[Math.floor(Math.random() * product.variants.length)];
         items.push({
             product_id: product.id,
@@ -85,6 +99,14 @@ const generateRandomItems = (count: number): OrderItem[] => {
     }
     return items;
 }
+
+const generateRandomAddress = () => {
+    const street = STREETS[Math.floor(Math.random() * STREETS.length)];
+    const city = CITIES[Math.floor(Math.random() * CITIES.length)];
+    const country = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
+    const zip = Math.floor(10000 + Math.random() * 90000);
+    return `${Math.floor(Math.random() * 999) + 1} ${street}, ${city}, ${country} ${zip}`;
+};
 
 // Main generation function
 const generateMockOrders = (userId: string, count: number): Order[] => {
@@ -101,6 +123,10 @@ const generateMockOrders = (userId: string, count: number): Order[] => {
     const estDeliveryDate = new Date(orderDate);
     estDeliveryDate.setDate(orderDate.getDate() + 7);
 
+    const shippingAddress = generateRandomAddress();
+    const destinationCity = shippingAddress.split(',')[1].trim();
+    const originFacility = ORIGIN_FACILITIES[Math.floor(Math.random() * ORIGIN_FACILITIES.length)];
+
     orders.push({
         id: `SN-${userId.substring(0,4)}-${Math.floor(100000 + Math.random() * 900000)}`,
         date: orderDate.toISOString(),
@@ -108,10 +134,10 @@ const generateMockOrders = (userId: string, count: number): Order[] => {
         total_amount: total,
         item_count: items.reduce((sum, item) => sum + item.quantity, 0),
         items: items,
-        shipping_address: "123 Innovation Blvd, New York, NY 10001",
+        shipping_address: shippingAddress,
         tracking_number: `1Z${Math.random().toString().slice(2, 18)}`,
         estimated_delivery: estDeliveryDate.toISOString(),
-        tracking_history: generateTrackingHistory(orderDate, status)
+        tracking_history: generateTrackingHistory(orderDate, status, destinationCity, originFacility)
     });
   }
   return orders.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -147,6 +173,10 @@ export const cancelOrder = async (userId: string, orderId: string): Promise<bool
                 status: "Order Cancelled",
                 isCurrent: true
             });
+            // Make previous step not current
+            if (userOrders[userId][orderIndex].tracking_history[1]) {
+                userOrders[userId][orderIndex].tracking_history[1].isCurrent = false;
+            }
             return true;
         }
     }
