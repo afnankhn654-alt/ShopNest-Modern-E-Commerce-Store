@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 
 // IMPORTANT: Replace with your actual Firebase project configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",
-  authDomain: "YOUR_AUTH_DOMAIN_HERE",
-  projectId: "YOUR_PROJECT_ID_HERE",
-  storageBucket: "YOUR_STORAGE_BUCKET_HERE",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID_HERE",
-  appId: "YOUR_APP_ID_HERE"
+  apiKey: "AIzaSyAgOK3DYPLNKeQkrVEByOp4nC9SqA2khLs",
+  authDomain: "shopnest-official.firebaseapp.com",
+  projectId: "shopnest-official",
+  storageBucket: "shopnest-official.firebasestorage.app",
+  messagingSenderId: "1092056605420",
+  appId: "1:1092056605420:web:233dce5cc665e806ecbbc9"
 };
 
 // Initialize Firebase
