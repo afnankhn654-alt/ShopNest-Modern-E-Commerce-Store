@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import * as ReactRouterDOM from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { fetchOrdersForUser } from '../services/orderService';
 import { Order, OrderStatus } from '../types';
@@ -11,8 +12,11 @@ import {
   CheckCircleIcon, 
   XCircleIcon, 
   ChevronRightIcon, 
-  InboxIcon 
+  InboxIcon,
+  LockClosedIcon,
 } from '@heroicons/react/24/outline';
+
+const { Link } = ReactRouterDOM as any;
 
 type FilterType = 'Active' | 'Delivered' | 'Cancelled & Returned';
 
@@ -35,7 +39,7 @@ const STATUS_COLORS: Record<OrderStatus, string> = {
 };
 
 const OrdersPage: React.FC = () => {
-  const { user } = useAuth();
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<FilterType>('Active');
@@ -43,13 +47,15 @@ const OrdersPage: React.FC = () => {
   const { formatPrice } = useLocation();
 
   useEffect(() => {
-    if (user) {
+    if (isAuthenticated && user) {
       setLoading(true);
       fetchOrdersForUser(user.id)
         .then(setOrders)
         .finally(() => setLoading(false));
+    } else if (!authLoading) {
+      setLoading(false);
     }
-  }, [user]);
+  }, [user, isAuthenticated, authLoading]);
 
   const filteredOrders = useMemo(() => {
     if (filter === 'Active') {
@@ -66,8 +72,32 @@ const OrdersPage: React.FC = () => {
     setSelectedOrder(updatedOrder);
   };
   
-  if (loading) {
-    return <Spinner />;
+  if (loading || authLoading) {
+    return <div className="min-h-screen flex items-center justify-center"><Spinner /></div>;
+  }
+
+  if (!isAuthenticated) {
+    return (
+        <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
+             <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 max-w-lg">
+                <div className="mx-auto w-16 h-16 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full flex items-center justify-center mb-6">
+                    <LockClosedIcon className="h-8 w-8"/>
+                </div>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">Access Your Logistics Hub</h1>
+                <p className="text-gray-500 dark:text-gray-400 mb-8">
+                    Please sign in or create an account to view your order history, track shipments, and manage returns.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link to="/auth" className="inline-block w-full sm:w-auto bg-primary-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-primary-700 transition-colors shadow-lg shadow-primary-500/30">
+                        Sign In
+                    </Link>
+                    <Link to="/auth" className="inline-block w-full sm:w-auto bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-3 px-8 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        Create Account
+                    </Link>
+                </div>
+             </div>
+        </div>
+    );
   }
 
   return (
@@ -108,7 +138,7 @@ const OrdersPage: React.FC = () => {
                 <div
                   key={order.id}
                   onClick={() => setSelectedOrder(order)}
-                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:border-primary-500/30 transition-all duration-300 cursor-pointer"
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:border-primary-500/30 transition-all duration-300 cursor-pointer group"
                 >
                   <div className="p-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 items-center">
                     
