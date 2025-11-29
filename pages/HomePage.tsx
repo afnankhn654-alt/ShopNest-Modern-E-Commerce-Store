@@ -36,6 +36,24 @@ const BANNER_DATA = [
   }
 ];
 
+// Helper to get a gradient based on category name
+const getCategoryGradient = (category: string) => {
+    const gradients: Record<string, string> = {
+        "Electronics": "from-blue-100 to-cyan-100 dark:from-blue-900/50 dark:to-cyan-900/50",
+        "Home & Living": "from-green-100 to-emerald-100 dark:from-green-900/50 dark:to-emerald-900/50",
+        "Fashion": "from-pink-100 to-rose-100 dark:from-pink-900/50 dark:to-rose-900/50",
+        "Beauty": "from-purple-100 to-violet-100 dark:from-purple-900/50 dark:to-violet-900/50",
+        "Gadgets": "from-indigo-100 to-slate-100 dark:from-indigo-900/50 dark:to-slate-900/50",
+        "Sports": "from-orange-100 to-amber-100 dark:from-orange-900/50 dark:to-amber-900/50",
+        "Toys & Games": "from-yellow-100 to-lime-100 dark:from-yellow-900/50 dark:to-lime-900/50",
+        "Accessories": "from-gray-100 to-stone-100 dark:from-gray-800/50 dark:to-stone-800/50",
+        "Health": "from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50",
+        "Stationery": "from-sky-100 to-blue-100 dark:from-sky-900/50 dark:to-blue-900/50",
+    };
+    return gradients[category] || "from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700";
+};
+
+
 // Helper component for the white cards/widgets
 const HomeWidget: React.FC<{ title: string; children: React.ReactNode; linkTo: string; linkText: string }> = ({ title, children, linkTo, linkText }) => (
   <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-5 flex flex-col h-full z-10 relative shadow-md rounded-sm">
@@ -53,7 +71,6 @@ const WidgetQuadGrid: React.FC<{ items: Product[]; titleMap?: Record<string, str
         {items.slice(0, 4).map(item => (
             <Link key={item.id} to={`/product/${item.id}`} className="flex flex-col h-full group">
                 <div className="flex-grow relative bg-gray-50 dark:bg-gray-700 mb-1 overflow-hidden rounded-sm">
-                     {/* Optimize for small thumbnail size (300px) */}
                      <img 
                         src={getOptimizedImageUrl(item.images[0].image_url, 300)} 
                         alt={item.title} 
@@ -71,11 +88,10 @@ const WidgetQuadGrid: React.FC<{ items: Product[]; titleMap?: Record<string, str
 
 // --- CREATIVE MOBILE HOME (Blended Style: 30% PC / 70% Creative) ---
 const CreativeMobileHome: React.FC<{ products: Product[], regionCode: string }> = ({ products, regionCode }) => {
-  const trending = products.slice(0, 6); // First 6 are trending/water
-  const forYou = products.slice(6); // Rest
+  const trending = products.slice(0, 6);
+  const forYou = products.slice(6);
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
 
-  // Auto-scroll banner
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBannerIndex((prev) => (prev + 1) % BANNER_DATA.length);
@@ -86,7 +102,6 @@ const CreativeMobileHome: React.FC<{ products: Product[], regionCode: string }> 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 font-mobile-body relative overflow-hidden">
       
-      {/* 1. Mobile Carousel (Mirrors PC Hero) */}
       <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-gray-200 dark:bg-gray-800">
          {BANNER_DATA.map((banner, index) => (
             <div 
@@ -104,7 +119,6 @@ const CreativeMobileHome: React.FC<{ products: Product[], regionCode: string }> 
                 </div>
             </div>
          ))}
-         {/* Dots */}
          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1.5">
             {BANNER_DATA.map((_, idx) => (
                 <div key={idx} className={`w-1.5 h-1.5 rounded-full transition-all ${idx === currentBannerIndex ? 'bg-white w-4' : 'bg-white/50'}`} />
@@ -112,7 +126,6 @@ const CreativeMobileHome: React.FC<{ products: Product[], regionCode: string }> 
          </div>
       </div>
 
-      {/* 2. Desktop-like Categories Row */}
       <div className="px-4 py-6 bg-white dark:bg-gray-800 shadow-sm mb-4">
           <div className="flex overflow-x-auto scrollbar-hide gap-6">
              {[
@@ -132,7 +145,6 @@ const CreativeMobileHome: React.FC<{ products: Product[], regionCode: string }> 
           </div>
       </div>
 
-      {/* 3. "Fresh Drops" / Water Collection (Horizontal Rail) */}
       <div className="mb-4 bg-white dark:bg-gray-800 py-6">
          <div className="px-4 flex justify-between items-center mb-4">
              <h3 className="font-bold text-lg text-gray-900 dark:text-white">Fresh Drops</h3>
@@ -152,12 +164,11 @@ const CreativeMobileHome: React.FC<{ products: Product[], regionCode: string }> 
          </div>
       </div>
 
-      {/* 4. "Just For You" - Standard Grid (Matches Desktop UI Cards) */}
       <div className="px-4 pb-4">
          <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-4">Just For You</h3>
          <div className="grid grid-cols-2 gap-4">
              {forYou.map((p) => (
-                 <ProductCard key={p.id} product={p} isSimple={true} />
+                 <ProductCard key={p.id} product={p} />
              ))}
          </div>
       </div>
@@ -173,17 +184,14 @@ const HomePage: React.FC = () => {
   const { startLoading, stopLoading } = useLoading();
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   
-  // Detect Device
   const { isMobile, isTablet } = useDeviceDetection();
   const isMobileView = isMobile || isTablet;
 
-  // Widget Data Slices
   const under25 = allProducts.filter(p => p.final_price <= 25).slice(0, 4);
   const fashionItems = allProducts.filter(p => p.category === 'Fashion' || p.category === 'Accessories').slice(0, 4);
   const homeItems = allProducts.filter(p => p.category === 'Home & Living' || p.subcategory === 'Lighting').slice(0, 4);
   const bigDeal = allProducts.find(p => p.discount_pct >= 15) || allProducts[0];
 
-  // Organize products by category for the long list
   const categorySections = useMemo(() => {
     const categories = Array.from(new Set(allProducts.map(p => p.category)));
     const priority = ['Electronics', 'Home & Living', 'Fashion', 'Beauty', 'Gadgets', 'Sports', 'Toys & Games'];
@@ -207,15 +215,8 @@ const HomePage: React.FC = () => {
       startLoading();
       setLoading(true);
       try {
-        // Fetch "water" products by default as requested
-        const data = await searchProducts('water');
-        
-        if (data && data.length > 0) {
-            setTrending(data);
-        } else {
-            const trendingData = await fetchTrendingProducts(currentRegion.code);
-            setTrending(trendingData);
-        }
+        const data = await fetchTrendingProducts(currentRegion.code);
+        setTrending(data);
       } catch (error) {
         console.error("Failed to fetch products:", error);
       } finally {
@@ -226,7 +227,6 @@ const HomePage: React.FC = () => {
     loadData();
   }, [currentRegion.code, startLoading, stopLoading]);
 
-  // Desktop Banner Auto-scroll
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBannerIndex((prev) => (prev + 1) % BANNER_DATA.length);
@@ -242,18 +242,14 @@ const HomePage: React.FC = () => {
     setCurrentBannerIndex((prev) => (prev - 1 + BANNER_DATA.length) % BANNER_DATA.length);
   };
 
-  // --- RETURN MOBILE VIEW IF DETECTED ---
   if (isMobileView && !loading) {
-      // Pass all products (trending first) to mobile view
       const feedProducts = [...trending, ...allProducts.filter(p => !trending.find(t => t.id === p.id))];
       return <CreativeMobileHome products={feedProducts} regionCode={currentRegion.code} />;
   }
 
-  // --- RETURN DESKTOP VIEW ---
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 pb-0">
       
-      {/* Hero Carousel */}
       <div className="relative w-full bg-white dark:bg-gray-800">
          <div className="w-full h-[280px] sm:h-[350px] md:h-[450px] relative overflow-hidden group">
              {BANNER_DATA.map((banner, index) => (
@@ -295,7 +291,6 @@ const HomePage: React.FC = () => {
              </button>
          </div>
 
-         {/* Widgets */}
          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-20 sm:-mt-32 md:-mt-60 pb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <HomeWidget title="Shop gifts by price" linkTo="/products" linkText="See all offers">
@@ -343,7 +338,6 @@ const HomePage: React.FC = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 space-y-12">
         
-        {/* Featured Collection (Water Products) - Renamed to "Trending Collection" */}
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 shadow-sm rounded-lg">
              <div className="flex items-center justify-between mb-4">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
@@ -354,11 +348,9 @@ const HomePage: React.FC = () => {
                 </Link>
             </div>
             {loading ? <Spinner /> : (
-                <div className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {trending.length > 0 ? trending.map(product => (
-                        <div key={product.id} className="min-w-[200px] md:min-w-[240px]">
-                            <ProductCard product={product} isSimple={true} />
-                        </div>
+                        <ProductCard key={product.id} product={product} />
                     )) : (
                         <div className="text-gray-500">No trending products found.</div>
                     )}
@@ -366,36 +358,33 @@ const HomePage: React.FC = () => {
             )}
         </div>
 
-        {/* Standard Grid: Recommended */}
         <div>
             <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Recommended for You</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                  {allProducts.filter((_, i) => i % 2 === 0).slice(0, 8).map(product => (
-                      <ProductCard key={`rec-${product.id}`} product={product} isSimple={true} />
+                      <ProductCard key={`rec-${product.id}`} product={product} />
                  ))}
             </div>
         </div>
 
-        {/* Category Rows */}
         {categorySections.map((section) => (
-             <div key={section.name} className="py-4">
+             <div key={section.name} className={`py-8 px-6 rounded-xl bg-gradient-to-r ${getCategoryGradient(section.name)}`}>
                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                    <h2 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3 drop-shadow-sm">
                         {section.name}
-                        <Link to={`/products/${section.name}`} className="text-sm font-normal text-primary-600 hover:underline">
-                            Shop now
-                        </Link>
                     </h2>
+                    <Link to={`/products/${section.name}`} className="text-sm font-bold text-primary-700 dark:text-primary-300 hover:underline bg-white/50 dark:bg-black/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                        Shop now
+                    </Link>
                  </div>
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                    {section.products.map(product => (
-                        <ProductCard key={`cat-${section.name}-${product.id}`} product={product} isSimple={true} />
+                    {section.products.slice(0, 5).map(product => (
+                        <ProductCard key={`cat-${section.name}-${product.id}`} product={product} />
                     ))}
                  </div>
              </div>
         ))}
         
-        {/* Pre-Footer */}
         <div className="border-t border-gray-200 dark:border-gray-700 pt-8 pb-4 text-center">
              <div className="inline-block bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 max-w-2xl w-full">
                 <p className="text-sm mb-2 text-gray-600 dark:text-gray-300">See personalized recommendations</p>

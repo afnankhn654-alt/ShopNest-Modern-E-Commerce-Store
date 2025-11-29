@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { useCart } from '../contexts/CartContext';
@@ -6,7 +6,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { useWishlist } from '../contexts/WishlistContext';
 import { useLocation } from '../contexts/LocationContext';
 import { SUPPORTED_REGIONS } from '../services/locationService';
-import { SunIcon, MoonIcon, UserCircleIcon, ShoppingCartIcon, Bars3Icon, XMarkIcon, MagnifyingGlassIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { getCategories } from '../data/products';
+import { SunIcon, MoonIcon, UserCircleIcon, ShoppingCartIcon, Bars3Icon, XMarkIcon, MagnifyingGlassIcon, HeartIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
 const { Link, NavLink, useNavigate } = ReactRouterDOM as any;
 
@@ -18,19 +19,16 @@ const Header: React.FC = () => {
   const { currentRegion, setRegion } = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isRegionMenuOpen, setIsRegionMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [regionSearchQuery, setRegionSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery('');
-    }
-  };
+  const [categories, setCategories] = useState<string[]>([]);
 
-  // Filter regions based on search input
+  useEffect(() => {
+    setCategories(getCategories());
+  }, []);
+
   const filteredRegions = useMemo(() => {
     if (!regionSearchQuery) return SUPPORTED_REGIONS;
     const lower = regionSearchQuery.toLowerCase();
@@ -55,28 +53,59 @@ const Header: React.FC = () => {
             <div className="hidden md:block ml-10">
               <div className="flex items-baseline space-x-4">
                 <NavLink to="/" className={({ isActive }: any) => isActive ? activeNavLinkClasses : navLinkClasses}>Home</NavLink>
-                <NavLink to="/products" className={({ isActive }: any) => isActive ? activeNavLinkClasses : navLinkClasses}>All Products</NavLink>
+                
+                {/* Categories Mega Menu */}
+                <div className="relative" onMouseLeave={() => setIsMegaMenuOpen(false)}>
+                    <button 
+                        onMouseEnter={() => setIsMegaMenuOpen(true)}
+                        onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
+                        className={`${navLinkClasses} flex items-center gap-1`}
+                    >
+                        Categories <ChevronDownIcon className={`h-4 w-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {isMegaMenuOpen && (
+                        <div 
+                            onMouseEnter={() => setIsMegaMenuOpen(true)}
+                            className="absolute -left-8 top-full w-screen max-w-4xl mt-2 animate-fade-in"
+                        >
+                            <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg shadow-2xl rounded-2xl border border-gray-200 dark:border-gray-700 p-8">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6">
+                                    {categories.map(category => (
+                                        <Link
+                                            key={category}
+                                            to={`/products/${category}`}
+                                            onClick={() => setIsMegaMenuOpen(false)}
+                                            className="block font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:pl-1 transition-all"
+                                        >
+                                            {category}
+                                        </Link>
+                                    ))}
+                                    <Link to="/products" onClick={() => setIsMegaMenuOpen(false)} className="block font-bold text-primary-600 dark:text-primary-400 hover:pl-1 transition-all col-span-full mt-4">
+                                        Shop All Products &rarr;
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
               </div>
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-4">
-             <form onSubmit={handleSearchSubmit} className="relative">
-                <input 
-                  type="search" 
-                  placeholder="Search..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-gray-100 dark:bg-gray-800 border border-transparent focus:ring-primary-500 focus:border-primary-500 rounded-full py-2 pl-10 pr-4 text-sm md:w-48 lg:w-64 transition-all duration-300"
-                />
-                <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"/>
-             </form>
+            <button
+              onClick={() => navigate('/search')}
+              className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+              aria-label="Search"
+            >
+              <MagnifyingGlassIcon className="h-6 w-6" />
+            </button>
              
             {/* Region Selector */}
             <div className="relative">
                 <button 
                   onClick={() => {
                       setIsRegionMenuOpen(!isRegionMenuOpen);
-                      setRegionSearchQuery(''); // Reset search on open
+                      setRegionSearchQuery('');
                   }}
                   className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center space-x-1"
                   title={currentRegion.name}
@@ -158,19 +187,17 @@ const Header: React.FC = () => {
           </div>
         </div>
         
-        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden pb-4">
-             <form onSubmit={handleSearchSubmit} className="relative mb-4">
-                <input 
-                  type="search" 
-                  placeholder="Search..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-gray-100 dark:bg-gray-800 border border-transparent focus:ring-primary-500 focus:border-primary-500 rounded-full py-2 pl-10 pr-4 text-sm transition-all duration-300"
-                />
+             <div className="relative mb-4">
+                <button 
+                  onClick={() => { navigate('/search'); setIsMenuOpen(false); }}
+                  className="w-full text-left bg-gray-100 dark:bg-gray-800 border border-transparent rounded-full py-2 pl-10 pr-4 text-sm text-gray-500"
+                >
+                  Search...
+                </button>
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"/>
-             </form>
+             </div>
             <div className="flex flex-col space-y-2">
               <NavLink to="/" className={({ isActive }: any) => isActive ? activeNavLinkClasses : navLinkClasses} onClick={() => setIsMenuOpen(false)}>Home</NavLink>
               <NavLink to="/products" className={({ isActive }: any) => isActive ? activeNavLinkClasses : navLinkClasses} onClick={() => setIsMenuOpen(false)}>All Products</NavLink>
@@ -185,7 +212,6 @@ const Header: React.FC = () => {
           </div>
         )}
 
-        {/* Mobile Region Menu Overlay */}
          {isRegionMenuOpen && (
              <div className="absolute top-16 right-4 left-4 z-50 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 md:w-64 md:left-auto flex flex-col max-h-[80vh]">
                  <div className="flex justify-between items-center mb-2">

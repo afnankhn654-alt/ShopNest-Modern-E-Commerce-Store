@@ -154,17 +154,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
                             {product.discount_pct > 0 && <span className="ml-2 text-sm text-gray-500 line-through">{formatPrice(product.price)}</span>}
                         </div>
                     </div>
-                    <div className="w-full sm:w-auto relative">
-                        <Link to={`/product/${product.id}`} className="w-full sm:w-auto block px-6 py-3 text-center border-2 border-primary-600 text-primary-600 dark:text-primary-400 font-bold rounded-lg transition-all duration-300 opacity-100 group-hover:opacity-0">
+                    <div className="w-full sm:w-auto">
+                        <Link 
+                            to={`/product/${product.id}`} 
+                            className="w-full sm:w-auto block px-6 py-3 text-center border-2 border-primary-600 text-primary-600 dark:text-primary-400 dark:border-primary-400 font-bold rounded-lg transition-colors duration-300 hover:bg-primary-600 hover:text-white dark:hover:bg-primary-400 dark:hover:text-gray-900"
+                        >
                            View Details
                         </Link>
-                         <button 
-                            onClick={handleAddToCart}
-                            className="absolute inset-0 w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white font-bold rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100 transform scale-95 group-hover:scale-100"
-                        >
-                            <ShoppingCartIcon className="h-5 w-5" />
-                           Add to Cart
-                        </button>
                     </div>
                 </div>
             </div>

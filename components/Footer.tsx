@@ -13,12 +13,8 @@ const Footer: React.FC = () => {
 
   const footerLinks = {
     "Get to Know Us": [
-      { name: "Careers", path: "/careers" },
-      { name: "Blog", path: "/blog" },
       { name: "About ShopNest", path: "/about" },
-      { name: "Investor Relations", path: "/investors" },
-      { name: "ShopNest Devices", path: "/devices" },
-      { name: "ShopNest Science", path: "/science" }
+      { name: "Investor Relations", path: "/investors" }
     ],
     "Let Us Help You": [
       { name: "Your Account", path: "/profile" },
@@ -32,7 +28,6 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="font-sans text-sm">
-      {/* Back to Top */}
       <button 
         onClick={scrollToTop} 
         className="w-full bg-slate-700 hover:bg-slate-600 text-white py-4 text-sm font-semibold transition-colors"
@@ -40,14 +35,13 @@ const Footer: React.FC = () => {
         Back to top
       </button>
 
-      {/* Main Links Section */}
       <div className="bg-slate-800 text-white py-12 border-b border-slate-700">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {Object.entries(footerLinks).map(([title, links]) => (
-              <div key={title} className="flex flex-col items-center md:items-start">
+              <div key={title}>
                 <h3 className="font-bold text-base mb-4 text-white">{title}</h3>
-                <ul className="space-y-2 flex flex-col items-center md:items-start">
+                <ul className="space-y-2">
                   {links.map((link, index) => (
                     <li key={index}>
                       <Link 
@@ -65,7 +59,6 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Branding & Region */}
       <div className="bg-slate-800 text-white py-8 border-b border-slate-700">
          <div className="container mx-auto px-4 flex flex-col items-center gap-6">
             <Link to="/" className="text-2xl font-bold text-white flex items-center gap-1">
@@ -79,7 +72,6 @@ const Footer: React.FC = () => {
          </div>
       </div>
 
-      {/* Bottom Copyright */}
       <div className="bg-slate-900 text-gray-400 py-8 text-xs text-center">
         <div className="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-4 max-w-4xl mx-auto justify-center">
              <Link to="/help" className="hover:underline">Conditions of Use</Link>
