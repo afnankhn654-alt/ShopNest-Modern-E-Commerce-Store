@@ -14,47 +14,16 @@ const GoogleIcon = () => (
     </svg>
 );
 
-const CreativeVisuals: React.FC = () => (
-    <div className="hidden lg:flex flex-col items-center justify-center p-12 bg-gradient-to-br from-gray-900 via-primary-900 to-purple-900 dark:from-gray-900 dark:via-primary-950 dark:to-black relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
-
-        <div className="w-64 h-64 perspective-1000">
-            <div className="w-full h-full preserve-3d animate-cube-rotate">
-                {[
-                    'translateZ(128px)',
-                    'rotateY(90deg) translateZ(128px)',
-                    'rotateY(180deg) translateZ(128px)',
-                    'rotateY(-90deg) translateZ(128px)',
-                    'rotateX(90deg) translateZ(128px)',
-                    'rotateX(-90deg) translateZ(128px)'
-                ].map((transform, i) => (
-                    <div 
-                        key={i} 
-                        className="absolute w-64 h-64 border-2 border-primary-400/50 bg-primary-500/10 backdrop-blur-sm"
-                        style={{ transform }}
-                    ></div>
-                ))}
-            </div>
-        </div>
-        
-        <h2 className="text-3xl font-bold text-white mt-12 mb-4 text-center">Your Gateway to a Smarter Store</h2>
-        <p className="text-primary-200/70 text-center max-w-sm">Secure, personalized, and seamless access to a world of products tailored for you.</p>
-
-        {[
-          { icon: LockClosedIcon, className: 'top-24 left-16' },
-          { icon: UserCircleIcon, className: 'top-1/2 left-8', delay: '1.5s' },
-          { icon: ShoppingBagIcon, className: 'bottom-24 right-16', delay: '0.5s' },
-          { icon: SparklesIcon, className: 'top-20 right-20', delay: '1s' }
-        ].map((item, i) => (
-            <item.icon 
-                key={i}
-                className={`absolute h-8 w-8 text-primary-300/50 animate-float ${item.className}`} 
-                style={{ animationDelay: item.delay || '0s', animationDuration: '6s' }} 
-            />
-        ))}
-    </div>
-);
-
+const visualsContent = {
+    login: {
+        title: "Your Gateway to a Smarter Store",
+        subtitle: "Secure, personalized, and seamless access to a world of products tailored for you."
+    },
+    signup: {
+        title: "Join the ShopNest Community",
+        subtitle: "Unlock exclusive deals, personalized recommendations, and a faster checkout experience."
+    }
+};
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -128,108 +97,162 @@ const AuthPage: React.FC = () => {
     }
   };
 
-  const formContent = (
-      <div key={isLogin ? 'login' : 'signup'} className="animate-fade-in">
-          <h2 className="text-3xl font-bold text-center mb-2 text-gray-900 dark:text-white">{isLogin ? 'Welcome Back!' : 'Create an Account'}</h2>
-          <p className="text-center text-gray-500 dark:text-gray-400 mb-6">{isLogin ? 'Sign in to access your world.' : 'Join us and start your journey.'}</p>
-          
-          <button
-            type="button"
-            onClick={handleGoogleSignIn}
-            disabled={loading}
-            className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 transition-colors group"
-          >
-            <GoogleIcon />
-            <span className="group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Continue with Google</span>
-          </button>
-
-          <div className="my-6 flex items-center">
-            <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
-            <span className="mx-4 text-gray-400 text-xs uppercase">OR</span>
-            <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
-          </div>
-          
-          <form onSubmit={handleEmailSubmit} className="space-y-4">
-            {!isLogin && (
-              <div className="animate-slide-in-down">
-                <label htmlFor="name" className="sr-only">Name</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                  placeholder="Your Name"
-                />
-              </div>
-            )}
-            <div>
-              <label htmlFor="email" className="sr-only">Email address</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                placeholder="Email Address"
-              />
-            </div>
-            <div className="relative">
-              <label htmlFor="password"className="sr-only">Password</label>
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                placeholder="Password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-              >
-                {showPassword ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}
-              </button>
-            </div>
-            {error && <p className="text-red-500 text-sm text-center pt-2">{error}</p>}
-            <div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-primary-300 disabled:cursor-not-allowed transition-transform hover:scale-105"
-              >
-                {loading ? 'Processing...' : (isLogin ? 'Login' : 'Create Account')}
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
-            <button onClick={() => { setIsLogin(!isLogin); setError(''); }} className="font-medium text-primary-600 hover:text-primary-500 hover:underline">
-              {isLogin ? 'Sign up now' : 'Log in'}
-            </button>
-          </p>
-      </div>
-  );
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
+    setError('');
+    setName('');
+    setEmail('');
+    setPassword('');
+  };
+  
+  const currentVisuals = isLogin ? visualsContent.login : visualsContent.signup;
 
   return (
     <div className="flex-grow flex items-center justify-center min-h-[80vh] py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-sm lg:max-w-5xl mx-auto lg:grid lg:grid-cols-2 rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
         
-        <CreativeVisuals />
+        <div className="hidden lg:flex flex-col items-center justify-center p-12 bg-gradient-to-br from-gray-900 via-primary-900 to-purple-900 dark:from-gray-900 dark:via-primary-950 dark:to-black relative overflow-hidden">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
 
-        <div className="w-full glass-panel p-8 sm:p-12 flex items-center justify-center">
-            <div className="w-full max-w-md">
-              {formContent}
+            <div className="w-64 h-64 perspective-1000">
+                <div className="w-full h-full preserve-3d animate-cube-rotate">
+                    {[
+                        'translateZ(128px)',
+                        'rotateY(90deg) translateZ(128px)',
+                        'rotateY(180deg) translateZ(128px)',
+                        'rotateY(-90deg) translateZ(128px)',
+                        'rotateX(90deg) translateZ(128px)',
+                        'rotateX(-90deg) translateZ(128px)'
+                    ].map((transform, i) => (
+                        <div 
+                            key={i} 
+                            className="absolute w-64 h-64 border-2 border-primary-400/50 bg-primary-500/10 backdrop-blur-sm"
+                            style={{ transform }}
+                        ></div>
+                    ))}
+                </div>
+            </div>
+            
+            <div key={isLogin ? 'login' : 'signup'} className="text-center animate-slide-in-from-right">
+                <h2 className="text-3xl font-bold text-white mt-12 mb-4">{currentVisuals.title}</h2>
+                <p className="text-primary-200/70 max-w-sm">{currentVisuals.subtitle}</p>
+            </div>
+
+            {[
+              { icon: LockClosedIcon, className: 'top-24 left-16' },
+              { icon: UserCircleIcon, className: 'top-1/2 left-8', delay: '1.5s' },
+              { icon: ShoppingBagIcon, className: 'bottom-24 right-16', delay: '0.5s' },
+              { icon: SparklesIcon, className: 'top-20 right-20', delay: '1s' }
+            ].map((item, i) => (
+                <item.icon 
+                    key={i}
+                    className={`absolute h-8 w-8 text-primary-300/50 animate-float ${item.className}`} 
+                    style={{ animationDelay: item.delay || '0s', animationDuration: '6s' }} 
+                />
+            ))}
+        </div>
+
+        <div className="w-full glass-panel p-8 sm:p-12 flex items-center justify-center min-h-[700px]">
+            <div className="w-full max-w-md overflow-hidden">
+              <div 
+                className="flex w-[200%] transition-transform duration-700 ease-in-out"
+                style={{ transform: `translateX(${isLogin ? '0' : '-50%'})`}}
+              >
+                <div className="w-1/2 flex-shrink-0 px-4">
+                  <h2 className="text-3xl font-bold text-center mb-2 text-gray-900 dark:shiny-text">Welcome Back!</h2>
+                  <p className="text-center text-gray-600 dark:text-gray-400 mb-6">Sign in to access your world.</p>
+                  
+                  <button
+                    type="button"
+                    onClick={handleGoogleSignIn}
+                    disabled={loading}
+                    className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 transition-colors group"
+                  >
+                    <GoogleIcon />
+                    <span className="group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Continue with Google</span>
+                  </button>
+
+                  <div className="my-6 flex items-center">
+                    <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                    <span className="mx-4 text-gray-400 text-xs uppercase">OR</span>
+                    <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                  </div>
+                  
+                  <form onSubmit={handleEmailSubmit} className="space-y-4">
+                    <div>
+                      <label htmlFor="login-email" className="sr-only">Email address</label>
+                      <input id="login-email" name="email" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors" placeholder="Email Address"/>
+                    </div>
+                    <div className="relative">
+                      <label htmlFor="login-password"className="sr-only">Password</label>
+                      <input id="login-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors" placeholder="Password"/>
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">{showPassword ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}</button>
+                    </div>
+                    {error && isLogin && <p className="text-red-500 text-sm text-center pt-2">{error}</p>}
+                    <div>
+                      <button type="submit" disabled={loading} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-primary-300 disabled:cursor-not-allowed transition-transform hover:scale-105">
+                        {loading ? 'Processing...' : 'Login'}
+                      </button>
+                    </div>
+                  </form>
+
+                  <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                    Don't have an account?{' '}
+                    <button onClick={toggleForm} className="font-medium text-primary-600 hover:text-primary-500 hover:underline">
+                      Sign up now
+                    </button>
+                  </p>
+                </div>
+                <div className="w-1/2 flex-shrink-0 px-4">
+                  <h2 className="text-3xl font-bold text-center mb-2 text-gray-900 dark:shiny-text">Create an Account</h2>
+                  <p className="text-center text-gray-600 dark:text-gray-400 mb-6">Join us and start your journey.</p>
+                  
+                  <button
+                    type="button"
+                    onClick={handleGoogleSignIn}
+                    disabled={loading}
+                    className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 transition-colors group"
+                  >
+                    <GoogleIcon />
+                    <span className="group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Continue with Google</span>
+                  </button>
+
+                  <div className="my-6 flex items-center">
+                    <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                    <span className="mx-4 text-gray-400 text-xs uppercase">OR</span>
+                    <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                  </div>
+                  
+                  <form onSubmit={handleEmailSubmit} className="space-y-4">
+                    <div>
+                      <label htmlFor="name" className="sr-only">Name</label>
+                      <input id="name" name="name" type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors" placeholder="Your Name"/>
+                    </div>
+                    <div>
+                      <label htmlFor="signup-email" className="sr-only">Email address</label>
+                      <input id="signup-email" name="email" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors" placeholder="Email Address"/>
+                    </div>
+                    <div className="relative">
+                      <label htmlFor="signup-password"className="sr-only">Password</label>
+                      <input id="signup-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors" placeholder="Password"/>
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">{showPassword ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}</button>
+                    </div>
+                    {error && !isLogin && <p className="text-red-500 text-sm text-center pt-2">{error}</p>}
+                    <div>
+                      <button type="submit" disabled={loading} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-primary-300 disabled:cursor-not-allowed transition-transform hover:scale-105">
+                        {loading ? 'Processing...' : 'Create Account'}
+                      </button>
+                    </div>
+                  </form>
+
+                  <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                    Already have an account?{' '}
+                    <button onClick={toggleForm} className="font-medium text-primary-600 hover:text-primary-500 hover:underline">
+                      Log in
+                    </button>
+                  </p>
+                </div>
+              </div>
             </div>
         </div>
 

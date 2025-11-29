@@ -50,6 +50,7 @@
               'draw-line': 'draw-line 1.5s ease-out forwards',
               'cube-rotate': 'cube-rotate 20s linear infinite',
               'slide-in-down': 'slide-in-down 0.5s ease-out',
+              'slide-in-from-right': 'slide-in-from-right 0.5s ease-out',
             },
             keyframes: {
               'gradient-x': {
@@ -106,6 +107,10 @@
               'slide-in-down': {
                 '0%': { opacity: '0', transform: 'translateY(-20px)' },
                 '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'slide-in-from-right': {
+                '0%': { opacity: '0', transform: 'translateX(20px)' },
+                '100%': { opacity: '1', transform: 'translateX(0)' },
               },
             }
           }
