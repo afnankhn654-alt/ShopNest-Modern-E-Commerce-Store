@@ -8,7 +8,7 @@ import {
     SunIcon, MoonIcon, Squares2X2Icon, Bars3Icon, HeartIcon, 
     ChevronRightIcon, PaintBrushIcon, CursorArrowRaysIcon, 
     CheckIcon, EyeIcon, SwatchIcon, SparklesIcon,
-    ComputerDesktopIcon, ArchiveBoxIcon
+    ComputerDesktopIcon, ArchiveBoxIcon, PhotoIcon // Added PhotoIcon for Image Editor
 } from '@heroicons/react/24/outline';
 
 const { useNavigate, Link } = ReactRouterDOM as any;
@@ -71,6 +71,9 @@ const ProfilePage: React.FC = () => {
       const newColors = { ...localCustomColors, primary, accent };
       setLocalCustomColors(newColors);
       setCustomColors(newColors);
+      if (themeMode !== 'custom') { // Ensure it switches to custom mode when using presets
+          setThemeMode('custom');
+      }
   };
 
   if (!user) {
@@ -118,6 +121,15 @@ const ProfilePage: React.FC = () => {
                       </div>
                       <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
                   </Link>
+                  <Link to="/image-editor" className="flex justify-between items-center p-4 rounded-xl bg-gradient-to-r from-purple-50 to-fuchsia-50 dark:from-gray-700 dark:to-gray-800 hover:shadow-md transition-all border border-purple-100 dark:border-gray-600 group">
+                      <div className="flex items-center space-x-4">
+                          <div className="p-2 bg-white dark:bg-gray-900 rounded-full shadow-sm text-purple-500 group-hover:scale-110 transition-transform">
+                             <PhotoIcon className="h-6 w-6"/>
+                          </div>
+                          <span className="text-lg font-bold text-gray-900 dark:text-white">AI Image Editor</span>
+                      </div>
+                      <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
+                  </Link>
               </div>
 
               {/* PERSONALIZATION SECTION */}
@@ -149,7 +161,7 @@ const ProfilePage: React.FC = () => {
                                   <button
                                       key={mode.id}
                                       onClick={() => setThemeMode(mode.id as ThemeMode)}
-                                      className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all ${themeMode === mode.id ? 'border-primary-500 bg-white dark:bg-gray-800 shadow-md text-primary-600' : 'border-transparent hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500'}`}
+                                      className={`flex flex-col items-center justify-center gap-2 p-3 rounded-xl transition-all ${themeMode === mode.id ? 'bg-primary-600 text-white shadow-md' : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300'}`}
                                   >
                                       <mode.icon className="h-6 w-6"/>
                                       <span className="text-xs font-bold">{mode.label}</span>
@@ -173,14 +185,14 @@ const ProfilePage: React.FC = () => {
                           <div className="flex gap-4">
                               <button
                                   onClick={() => setLayout('grid')}
-                                  className={`flex-1 flex items-center justify-center gap-3 px-4 py-4 rounded-xl border-2 transition-all ${layout === 'grid' ? 'border-primary-500 bg-white dark:bg-gray-800 shadow-sm text-primary-600' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'}`}
+                                  className={`flex-1 flex items-center justify-center gap-3 px-4 py-4 rounded-xl transition-all ${layout === 'grid' ? 'bg-primary-600 text-white shadow-sm' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'}`}
                               >
                                   <Squares2X2Icon className="h-5 w-5"/>
                                   <span className="font-medium">Grid View</span>
                               </button>
                               <button
                                   onClick={() => setLayout('list')}
-                                  className={`flex-1 flex items-center justify-center gap-3 px-4 py-4 rounded-xl border-2 transition-all ${layout === 'list' ? 'border-primary-500 bg-white dark:bg-gray-800 shadow-sm text-primary-600' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'}`}
+                                  className={`flex-1 flex items-center justify-center gap-3 px-4 py-4 rounded-xl transition-all ${layout === 'list' ? 'bg-primary-600 text-white shadow-sm' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'}`}
                               >
                                   <Bars3Icon className="h-5 w-5"/>
                                   <span className="font-medium">List View</span>
@@ -207,72 +219,72 @@ const ProfilePage: React.FC = () => {
                                    <button
                                        key={t.name}
                                        onClick={() => handlePresetSelect(t.primary, t.accent)}
-                                       className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-transform hover:scale-110 ${localCustomColors.primary === t.primary ? 'border-gray-900 dark:border-white ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900' : 'border-transparent shadow-sm'}`}
+                                       className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-transform hover:scale-110 ${localCustomColors.primary === t.primary && themeMode === 'custom' ? 'border-gray-900 dark:border-white ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900' : 'border-transparent shadow-sm'}`}
                                        style={{ backgroundColor: t.primary }}
                                        title={t.name}
                                    >
-                                       {localCustomColors.primary === t.primary && <CheckIcon className="h-5 w-5 text-white drop-shadow-md" />}
+                                       {localCustomColors.primary === t.primary && themeMode === 'custom' && <CheckIcon className="h-5 w-5 text-white drop-shadow-md" />}
                                    </button>
                                ))}
                            </div>
 
                            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Primary Color</label>
+                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Primary Color</label>
                                     <div className="flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg border border-gray-200 dark:border-gray-600">
                                         <input 
                                             type="color" 
                                             value={localCustomColors.primary}
                                             onChange={(e) => handleColorChange('primary', e.target.value)}
-                                            className="w-8 h-8 rounded cursor-pointer border-none p-0"
+                                            className="w-8 h-8 rounded cursor-pointer border-none p-0 bg-transparent"
                                         />
                                         <span className="text-xs font-mono text-gray-600 dark:text-gray-300">{localCustomColors.primary}</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Accent Color</label>
+                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Accent Color</label>
                                     <div className="flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg border border-gray-200 dark:border-gray-600">
                                         <input 
                                             type="color" 
                                             value={localCustomColors.accent}
                                             onChange={(e) => handleColorChange('accent', e.target.value)}
-                                            className="w-8 h-8 rounded cursor-pointer border-none p-0"
+                                            className="w-8 h-8 rounded cursor-pointer border-none p-0 bg-transparent"
                                         />
                                         <span className="text-xs font-mono text-gray-600 dark:text-gray-300">{localCustomColors.accent}</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Background</label>
+                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Background</label>
                                     <div className="flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg border border-gray-200 dark:border-gray-600">
                                         <input 
                                             type="color" 
                                             value={localCustomColors.background}
                                             onChange={(e) => handleColorChange('background', e.target.value)}
-                                            className="w-8 h-8 rounded cursor-pointer border-none p-0"
+                                            className="w-8 h-8 rounded cursor-pointer border-none p-0 bg-transparent"
                                         />
                                         <span className="text-xs font-mono text-gray-600 dark:text-gray-300">{localCustomColors.background}</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Card Background</label>
+                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Card Background</label>
                                     <div className="flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg border border-gray-200 dark:border-gray-600">
                                         <input 
                                             type="color" 
                                             value={localCustomColors.cardBackground}
                                             onChange={(e) => handleColorChange('cardBackground', e.target.value)}
-                                            className="w-8 h-8 rounded cursor-pointer border-none p-0"
+                                            className="w-8 h-8 rounded cursor-pointer border-none p-0 bg-transparent"
                                         />
                                         <span className="text-xs font-mono text-gray-600 dark:text-gray-300">{localCustomColors.cardBackground}</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Text Color</label>
+                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Text Color</label>
                                     <div className="flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg border border-gray-200 dark:border-gray-600">
                                         <input 
                                             type="color" 
                                             value={localCustomColors.text}
                                             onChange={(e) => handleColorChange('text', e.target.value)}
-                                            className="w-8 h-8 rounded cursor-pointer border-none p-0"
+                                            className="w-8 h-8 rounded cursor-pointer border-none p-0 bg-transparent"
                                         />
                                         <span className="text-xs font-mono text-gray-600 dark:text-gray-300">{localCustomColors.text}</span>
                                     </div>
@@ -290,10 +302,10 @@ const ProfilePage: React.FC = () => {
                                      <button
                                          key={style.id}
                                          onClick={() => setCursorStyle(style.id)}
-                                         className={`relative flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all group overflow-hidden ${cursorStyle === style.id ? 'border-primary-500 bg-white dark:bg-gray-800 shadow-md' : 'border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-white dark:hover:bg-gray-800'}`}
+                                         className={`relative flex flex-col items-center justify-center p-3 rounded-xl transition-all group overflow-hidden bg-gray-200 dark:bg-gray-700 ${cursorStyle === style.id ? 'bg-primary-600 text-white shadow-md' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'}`}
                                      >
                                          <span className="text-2xl mb-2 transform group-hover:scale-110 transition-transform">{style.icon}</span>
-                                         <span className="text-[10px] font-bold text-gray-600 dark:text-gray-300 text-center truncate w-full">{style.name}</span>
+                                         <span className="text-[10px] font-bold text-center truncate w-full">{style.name}</span>
                                          {cursorStyle === style.id && (
                                              <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-primary-500 rounded-full"></div>
                                          )}

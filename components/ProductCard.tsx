@@ -85,11 +85,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
   const WishlistButton = (
     <button
       onClick={handleWishlistToggle}
-      className="absolute top-3 right-3 p-2 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm rounded-full text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-400 transition-colors z-20"
+      className={`absolute top-3 right-3 p-2 rounded-full transition-colors z-20 ${
+        isInWishlist(product.id)
+          ? 'bg-red-500 text-white'
+          : 'bg-primary-600/80 text-white hover:bg-primary-600 backdrop-blur-sm'
+      }`}
       aria-label="Add to wishlist"
     >
       {isInWishlist(product.id) ? (
-        <HeartIconSolid className="h-6 w-6 text-red-500" />
+        <HeartIconSolid className="h-6 w-6" />
       ) : (
         <HeartIconOutline className="h-6 w-6" />
       )}
@@ -132,6 +136,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
                   <Link to={`/product/${product.id}`} className="block">
                       <p className="text-sm font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wide">{product.brand}</p>
                       <h3 className="mt-1 font-bold text-xl text-gray-800 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{product.title}</h3>
+                  </Link>
+                  <div className="mt-2">
+                    <Rating rating={product.rating} reviews_count={product.reviews_count} size="sm" />
+                  </div>
+                  <Link to={`/product/${product.id}`} className="block">
                       <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{product.short_description}</p>
                   </Link>
                   
@@ -148,7 +157,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
 
                 <div className="mt-6 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
                     <div className="flex-shrink-0">
-                        <Rating rating={product.rating} reviews_count={product.reviews_count} size="sm" />
                         <div className="mt-2">
                             <span className="text-2xl font-extrabold text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">{formatPrice(product.final_price)}</span>
                             {product.discount_pct > 0 && <span className="ml-2 text-sm text-gray-500 line-through">{formatPrice(product.price)}</span>}
@@ -157,7 +165,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
                     <div className="w-full sm:w-auto">
                         <Link 
                             to={`/product/${product.id}`} 
-                            className="w-full sm:w-auto block px-6 py-3 text-center border-2 border-primary-600 text-primary-600 dark:text-primary-400 dark:border-primary-400 font-bold rounded-lg transition-colors duration-300 hover:bg-primary-600 hover:text-white dark:hover:bg-primary-400 dark:hover:text-gray-900"
+                            className="w-full sm:w-auto block px-6 py-3 text-center bg-primary-600 text-white font-bold rounded-lg transition-colors duration-300 hover:bg-primary-700 dark:hover:bg-primary-500"
                         >
                            View Details
                         </Link>
@@ -200,10 +208,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isSimple = false }) 
           <div className="p-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">{product.brand}</p>
             <h3 className="mt-1 font-semibold text-lg text-gray-800 dark:text-gray-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 truncate">{product.title}</h3>
+            <div className="mt-2">
+              <Rating rating={product.rating} reviews_count={product.reviews_count} />
+            </div>
             {AiInsightBanner}
             <div className="mt-2 flex justify-between items-center">
               <p className="text-xl font-bold text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">{formatPrice(product.final_price)}</p>
-              <Rating rating={product.rating} />
             </div>
           </div>
         )}

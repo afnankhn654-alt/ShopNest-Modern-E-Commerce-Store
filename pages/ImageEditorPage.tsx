@@ -129,7 +129,7 @@ const ImageEditorPage: React.FC = () => {
                 <div 
                   {...getRootProps()}
                   className={`mt-4 border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${
-                    isDragActive ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20' : 'border-gray-300 dark:border-gray-600 hover:border-primary-400'
+                    isDragActive ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20' : 'border-gray-300 dark:border-gray-600 hover:border-primary-400 bg-white dark:bg-gray-700'
                   }`}
                 >
                   <input {...getInputProps()} />

@@ -111,7 +111,7 @@ const AuthPage: React.FC = () => {
     <div className="flex-grow flex items-center justify-center min-h-[80vh] py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-sm lg:max-w-5xl mx-auto lg:grid lg:grid-cols-2 rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
         
-        <div className="hidden lg:flex flex-col items-center justify-center p-12 bg-gradient-to-br from-gray-900 via-primary-900 to-purple-900 dark:from-gray-900 dark:via-primary-950 dark:to-black relative overflow-hidden">
+        <div className="hidden lg:flex flex-col items-center justify-center p-12 bg-gradient-to-br from-primary-800 via-primary-900 to-purple-900 dark:from-gray-900 dark:via-indigo-950 dark:to-purple-950 relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
 
             <div className="w-64 h-64 perspective-1000">
@@ -174,7 +174,7 @@ const AuthPage: React.FC = () => {
 
                   <div className="my-6 flex items-center">
                     <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
-                    <span className="mx-4 text-gray-400 text-xs uppercase">OR</span>
+                    <span className="mx-4 text-gray-500 dark:text-gray-400 text-xs uppercase">OR</span>
                     <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
                   </div>
                   
@@ -186,7 +186,7 @@ const AuthPage: React.FC = () => {
                     <div className="relative">
                       <label htmlFor="login-password"className="sr-only">Password</label>
                       <input id="login-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors" placeholder="Password"/>
-                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">{showPassword ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}</button>
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-transparent">{showPassword ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}</button>
                     </div>
                     {error && isLogin && <p className="text-red-500 text-sm text-center pt-2">{error}</p>}
                     <div>
@@ -198,7 +198,7 @@ const AuthPage: React.FC = () => {
 
                   <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
                     Don't have an account?{' '}
-                    <button onClick={toggleForm} className="font-medium text-primary-600 hover:text-primary-500 hover:underline">
+                    <button onClick={toggleForm} className="font-medium text-primary-600 hover:text-primary-500 hover:underline bg-gray-100 dark:bg-gray-700 p-2 rounded-md">
                       Sign up now
                     </button>
                   </p>
@@ -219,7 +219,7 @@ const AuthPage: React.FC = () => {
 
                   <div className="my-6 flex items-center">
                     <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
-                    <span className="mx-4 text-gray-400 text-xs uppercase">OR</span>
+                    <span className="mx-4 text-gray-500 dark:text-gray-400 text-xs uppercase">OR</span>
                     <div className="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
                   </div>
                   
@@ -235,7 +235,7 @@ const AuthPage: React.FC = () => {
                     <div className="relative">
                       <label htmlFor="signup-password"className="sr-only">Password</label>
                       <input id="signup-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 transition-colors" placeholder="Password"/>
-                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">{showPassword ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}</button>
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-transparent">{showPassword ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}</button>
                     </div>
                     {error && !isLogin && <p className="text-red-500 text-sm text-center pt-2">{error}</p>}
                     <div>
@@ -247,7 +247,7 @@ const AuthPage: React.FC = () => {
 
                   <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
                     Already have an account?{' '}
-                    <button onClick={toggleForm} className="font-medium text-primary-600 hover:text-primary-500 hover:underline">
+                    <button onClick={toggleForm} className="font-medium text-primary-600 hover:text-primary-500 hover:underline bg-gray-100 dark:bg-gray-700 p-2 rounded-md">
                       Log in
                     </button>
                   </p>

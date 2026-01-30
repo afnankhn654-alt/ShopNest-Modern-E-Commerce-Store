@@ -154,7 +154,9 @@ export const fetchOrdersForUser = async (userId: string): Promise<Order[]> => {
     await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network latency
 
     if (!userOrders[userId]) {
-        userOrders[userId] = generateMockOrders(userId, 7); // Generate 7 mock orders per user
+        // We will no longer generate mock orders. New users will see an empty list.
+        // In a real app, this would query a database. For this demo, we initialize to an empty array.
+        userOrders[userId] = [];
     }
     return [...userOrders[userId]];
 };

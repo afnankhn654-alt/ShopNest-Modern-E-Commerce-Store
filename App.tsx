@@ -33,6 +33,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const InfoPage = lazy(() => import('./pages/InfoPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const OrdersPage = lazy(() => import('./pages/OrdersPage'));
+const ImageEditorPage = lazy(() => import('./pages/ImageEditorPage')); // New AI Image Editor Page
 
 const DesktopLayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="flex flex-col min-h-screen animate-gradient-bg text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -65,7 +66,6 @@ const AppContent: React.FC = () => {
     >
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/:category" element={<ProductListPage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
@@ -97,6 +97,7 @@ const AppContent: React.FC = () => {
         <Route path="/returns" element={<InfoPage title="Returns & Replacements" />} />
         <Route path="/content-devices" element={<InfoPage title="Manage Your Content and Devices" />} />
         <Route path="/help" element={<InfoPage title="Help Center" contentKey="help" />} />
+        <Route path="/image-editor" element={<ImageEditorPage />} /> {/* New Route */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>

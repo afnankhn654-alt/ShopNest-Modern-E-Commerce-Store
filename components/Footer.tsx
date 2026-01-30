@@ -26,6 +26,8 @@ const Footer: React.FC = () => {
     ]
   };
 
+  const buttonClasses = "bg-slate-700 hover:bg-slate-600 rounded px-3 py-2 transition-colors";
+
   return (
     <footer className="font-sans text-sm">
       <button 
@@ -65,9 +67,9 @@ const Footer: React.FC = () => {
               ShopNest
             </Link>
             <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-300">
-               <button className="border border-gray-500 rounded px-2 py-1 hover:border-white">English</button>
-               <button className="border border-gray-500 rounded px-2 py-1 hover:border-white">$ USD - U.S. Dollar</button>
-               <button className="border border-gray-500 rounded px-2 py-1 hover:border-white">🇺🇸 United States</button>
+               <button className={buttonClasses}>English</button>
+               <button className={buttonClasses}>$ USD - U.S. Dollar</button>
+               <button className={buttonClasses}>🇺🇸 United States</button>
             </div>
          </div>
       </div>

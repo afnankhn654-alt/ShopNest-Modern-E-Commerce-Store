@@ -464,9 +464,9 @@ const CheckoutPage: React.FC = () => {
 
                  <button 
                    onClick={() => setStep('payment')}
-                   className="w-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
+                   className="w-full bg-primary-600 text-white font-bold py-4 rounded-xl hover:bg-primary-700 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
                  >
-                    Continue to Secure Payment <div className="bg-white/20 rounded-full p-1"><CheckCircleIcon className="h-4 w-4"/></div>
+                    Continue to Secure Payment <CheckCircleIcon className="h-5 w-5"/>
                  </button>
               </div>
 

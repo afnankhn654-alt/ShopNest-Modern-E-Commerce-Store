@@ -718,13 +718,14 @@ interface ProductDef {
   brand: string;
   desc: string;
   imgKeyword: string;
+  imageUrls?: string[];
 }
 
 // 1. $1-5 CATALOG (100 Items)
 const CATALOG_1_5: ProductDef[] = [
-    { name: "Gel Pen", cat: "Stationery", sub: "Writing", brand: "Scripto", desc: "Smooth writing gel pen with ergonomic grip.", imgKeyword: "pen" },
-    { name: "Sticky Notes", cat: "Stationery", sub: "Paper", brand: "NoteMate", desc: "Bright and colorful sticky notes for reminders.", imgKeyword: "sticky notes" },
-    { name: "Washi Tape", cat: "Stationery", sub: "Crafts", brand: "Crafty", desc: "Decorative adhesive tape for journaling.", imgKeyword: "washi tape" },
+    { name: "Gel Pen", cat: "Stationery", sub: "Writing", brand: "Scripto", desc: "Smooth writing gel pen with ergonomic grip.", imgKeyword: "pen", imageUrls: ["https://images.unsplash.com/photo-1585336261022-680e2954d182", "https://images.unsplash.com/photo-1471052963053-621a63c9b7f5", "https://images.unsplash.com/photo-1629853243936-e4d55986d066", "https://images.unsplash.com/photo-1599625308691-885023907153"] },
+    { name: "Sticky Notes", cat: "Stationery", sub: "Paper", brand: "NoteMate", desc: "Bright and colorful sticky notes for reminders.", imgKeyword: "sticky notes", imageUrls: ["https://images.unsplash.com/photo-1596483921200-c9233010b98c", "https://images.unsplash.com/photo-1587280501635-3c072b260654", "https://images.unsplash.com/photo-1603206240092-23999e469796", "https://images.unsplash.com/photo-1541852110198-8f8319f359c5"] },
+    { name: "Washi Tape", cat: "Stationery", sub: "Crafts", brand: "Crafty", desc: "Decorative adhesive tape for journaling.", imgKeyword: "washi tape", imageUrls: ["https://images.unsplash.com/photo-1595246135406-b0351735d4f3", "https://images.unsplash.com/photo-1617105821952-192e59218c50", "https://images.unsplash.com/photo-1544273210-6da35109b4f7", "https://images.unsplash.com/photo-1610444331441-9a4a743c5b9f"] },
     { name: "Paper Clips", cat: "Stationery", sub: "Office", brand: "OfficePro", desc: "Durable metal paper clips in assorted colors.", imgKeyword: "paper clips" },
     { name: "Eraser", cat: "Stationery", sub: "Writing", brand: "EraseIt", desc: "Dust-free eraser for clean corrections.", imgKeyword: "eraser" },
     { name: "Ruler", cat: "Stationery", sub: "Tools", brand: "MeasureUp", desc: "Clear plastic 30cm ruler with metric markings.", imgKeyword: "ruler" },
@@ -739,22 +740,22 @@ const CATALOG_1_5: ProductDef[] = [
     { name: "Binder Clips", cat: "Stationery", sub: "Office", brand: "ClipTight", desc: "Assorted size binder clips.", imgKeyword: "binder clips" },
     { name: "Push Pins", cat: "Stationery", sub: "Office", brand: "PinPoint", desc: "Colorful push pins for cork boards.", imgKeyword: "push pins" },
     { name: "Magnets", cat: "Home & Living", sub: "Decor", brand: "StickOn", desc: "Strong decorative magnets.", imgKeyword: "magnets" },
-    { name: "Keyring", cat: "Accessories", sub: "Gadgets", brand: "KeyKeep", desc: "Durable metal keyring with split ring.", imgKeyword: "keychain" },
+    { name: "Keyring", cat: "Accessories", sub: "Gadgets", brand: "KeyKeep", desc: "Durable metal keyring with split ring.", imgKeyword: "keychain", imageUrls: ["https://images.unsplash.com/photo-1635741009083-2943a8523ddb", "https://images.unsplash.com/photo-1579580665487-94a211973685", "https://images.unsplash.com/photo-1604671368394-22ae7d21e37f", "https://images.unsplash.com/photo-1564424224827-cd2d68938b10"] },
     { name: "Lanyard", cat: "Accessories", sub: "Gadgets", brand: "HoldOn", desc: "Fabric lanyard with safety breakaway.", imgKeyword: "lanyard" },
     { name: "Badge Holder", cat: "Stationery", sub: "Office", brand: "IDSafe", desc: "Clear plastic ID card holder.", imgKeyword: "badge" },
     { name: "Whistle", cat: "Sports", sub: "Gear", brand: "LoudSound", desc: "Classic sports whistle with lanyard.", imgKeyword: "whistle" },
-    { name: "Cable Tie", cat: "Electronics", sub: "Accessories", brand: "TidyTech", desc: "Reusable velcro cable ties.", imgKeyword: "cable tie" },
-    { name: "Cord Organizer", cat: "Electronics", sub: "Accessories", brand: "CordKeeper", desc: "Adhesive cord clips for desk management.", imgKeyword: "cable management" },
-    { name: "Phone Stand", cat: "Electronics", sub: "Accessories", brand: "ViewEasy", desc: "Foldable plastic phone stand.", imgKeyword: "phone stand" },
-    { name: "Stylus", cat: "Electronics", sub: "Accessories", brand: "TouchPoint", desc: "Universal capacitive stylus pen.", imgKeyword: "stylus" },
-    { name: "Screen Cloth", cat: "Electronics", sub: "Cleaning", brand: "CleanScreen", desc: "Microfiber cloth for screens and glasses.", imgKeyword: "microfiber cloth" },
-    { name: "Earbud Case", cat: "Electronics", sub: "Accessories", brand: "PodGuard", desc: "Silicone case for wireless earbuds.", imgKeyword: "earbud case" },
-    { name: "Battery Case", cat: "Electronics", sub: "Storage", brand: "PowerSafe", desc: "Plastic storage case for AA/AAA batteries.", imgKeyword: "battery" },
-    { name: "Mini Torch", cat: "Gadgets", sub: "Tools", brand: "BrightLite", desc: "Compact LED keychain flashlight.", imgKeyword: "flashlight" },
+    { name: "Cable Tie", cat: "Electronics", sub: "Accessories", brand: "TidyTech", desc: "Reusable velcro cable ties.", imgKeyword: "cable tie", imageUrls: ["https://images.unsplash.com/photo-1669490161404-358b2927f09f?q=80&w=800", "https://images.unsplash.com/photo-1596719234838-462e08b1d440?q=80&w=800", "https://images.unsplash.com/photo-1614741128883-c21e0f345427?q=80&w=800", "https://images.unsplash.com/photo-1599423982399-e64e83f3a8b2?q=80&w=800"] },
+    { name: "Cord Organizer", cat: "Electronics", sub: "Accessories", brand: "CordKeeper", desc: "Adhesive cord clips for desk management.", imgKeyword: "cable management", imageUrls: ["https://images.unsplash.com/photo-1619484895694-855c4d216f86?q=80&w=800", "https://images.unsplash.com/photo-1620228831018-a6b05423f5b7?q=80&w=800", "https://images.unsplash.com/photo-1543168253-259f7b602d0a?q=80&w=800", "https://images.unsplash.com/photo-1599423982399-e64e83f3a8b2?q=80&w=800"] },
+    { name: "Phone Stand", cat: "Electronics", sub: "Accessories", brand: "ViewEasy", desc: "Foldable plastic phone stand.", imgKeyword: "phone stand", imageUrls: ["https://images.unsplash.com/photo-1624299064166-7b8304a43b67?q=80&w=800", "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=800", "https://images.unsplash.com/photo-1608224094119-92334b3f173b?q=80&w=800", "https://images.unsplash.com/photo-1625244690002-3c3cf5c558b3?q=80&w=800"] },
+    { name: "Stylus", cat: "Electronics", sub: "Accessories", brand: "TouchPoint", desc: "Universal capacitive stylus pen.", imgKeyword: "stylus", imageUrls: ["https://images.unsplash.com/photo-1589739900223-453f7a1f5a5e?q=80&w=800", "https://images.unsplash.com/photo-1554377508-e3498b584e03?q=80&w=800", "https://images.unsplash.com/photo-1603483080004-9a25b31f8a84?q=80&w=800", "https://images.unsplash.com/photo-1623820164831-2882190d0b64?q=80&w=800"] },
+    { name: "Screen Cloth", cat: "Electronics", sub: "Cleaning", brand: "CleanScreen", desc: "Microfiber cloth for screens and glasses.", imgKeyword: "microfiber cloth", imageUrls: ["https://images.unsplash.com/photo-1621293051480-1a108a7b3e0e?q=80&w=800", "https://images.unsplash.com/photo-1604067165840-a13550e64c53?q=80&w=800", "https://images.unsplash.com/photo-1617886322207-6f50433e5f22?q=80&w=800", "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800"] },
+    { name: "Earbud Case", cat: "Electronics", sub: "Accessories", brand: "PodGuard", desc: "Silicone case for wireless earbuds.", imgKeyword: "earbud case", imageUrls: ["https://images.unsplash.com/photo-1603351154341-e8a71573b98c?q=80&w=800", "https://images.unsplash.com/photo-1600294038569-861c8a107b31?q=80&w=800", "https://images.unsplash.com/photo-1610438235354-a6ae5528385c?q=80&w=800", "https://images.unsplash.com/photo-1590054394017-0d481600a442?q=80&w=800"] },
+    { name: "Battery Case", cat: "Electronics", sub: "Storage", brand: "PowerSafe", desc: "Plastic storage case for AA/AAA batteries.", imgKeyword: "battery", imageUrls: ["https://images.unsplash.com/photo-1622495804825-f7b539118598?q=80&w=800", "https://images.unsplash.com/photo-1622495804828-5a0209e7f52a?q=80&w=800", "https://images.unsplash.com/photo-1588661706240-5231a4a4f89d?q=80&w=800", "https://images.unsplash.com/photo-1622495893977-172b05b3281e?q=80&w=800"] },
+    { name: "Mini Torch", cat: "Gadgets", sub: "Tools", brand: "BrightLite", desc: "Compact LED keychain flashlight.", imgKeyword: "flashlight", imageUrls: ["https://images.unsplash.com/photo-1582845512747-e42004273331", "https://images.unsplash.com/photo-1616870633904-173699b08657", "https://images.unsplash.com/photo-1572972037740-49b04a259a4c", "https://images.unsplash.com/photo-1620625349372-353cfc90e0b3"] },
     { name: "Tape Measure", cat: "Home & Living", sub: "Tools", brand: "MeasurePro", desc: "Retractable 1.5m sewing tape measure.", imgKeyword: "tape measure" },
     { name: "Screwdriver", cat: "Home & Living", sub: "Tools", brand: "FixAll", desc: "Mini pocket screwdriver set.", imgKeyword: "screwdriver" },
     { name: "Utility Knife", cat: "Home & Living", sub: "Tools", brand: "SharpEdge", desc: "Retractable box cutter.", imgKeyword: "box cutter" },
-    { name: "Nail File", cat: "Beauty", sub: "Nails", brand: "SmoothNail", desc: "Professional grit nail file.", imgKeyword: "nail file" },
+    { name: "Nail File", cat: "Beauty", sub: "Nails", brand: "SmoothNail", desc: "Professional grit nail file.", imgKeyword: "nail file", imageUrls: ["https://images.unsplash.com/photo-1633610996165-a13a8c3927f0", "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9", "https://images.unsplash.com/photo-1512290746433-3860fab69958", "https://images.unsplash.com/photo-1519415510236-718bdf215923"]},
     { name: "Nail Clippers", cat: "Beauty", sub: "Nails", brand: "ClipClean", desc: "Stainless steel fingernail clippers.", imgKeyword: "nail clippers" },
     { name: "Tweezers", cat: "Beauty", sub: "Tools", brand: "PluckPerfect", desc: "Slant tip tweezers.", imgKeyword: "tweezers" },
     { name: "Comb", cat: "Beauty", sub: "Hair", brand: "StyleStrand", desc: "Fine tooth pocket comb.", imgKeyword: "comb" },
@@ -762,7 +763,7 @@ const CATALOG_1_5: ProductDef[] = [
     { name: "Hair Tie", cat: "Fashion", sub: "Accessories", brand: "HoldTight", desc: "No-snag hair elastics.", imgKeyword: "hair tie" },
     { name: "Scrunchie", cat: "Fashion", sub: "Accessories", brand: "SoftStyle", desc: "Velvet hair scrunchie.", imgKeyword: "scrunchie" },
     { name: "Headband", cat: "Fashion", sub: "Accessories", brand: "SweatBan", desc: "Sports headband.", imgKeyword: "headband" },
-    { name: "Lip Balm", cat: "Beauty", sub: "Lip Care", brand: "SoftLips", desc: "Moisturizing lip balm stick.", imgKeyword: "lip balm" },
+    { name: "Lip Balm", cat: "Beauty", sub: "Lip Care", brand: "SoftLips", desc: "Moisturizing lip balm stick.", imgKeyword: "lip balm", imageUrls: ["https://images.unsplash.com/photo-1620916566398-39f168a27e43", "https://images.unsplash.com/photo-1601052327591-2394c65360ea", "https://images.unsplash.com/photo-1512496015851-a90fb38ba796", "https://images.unsplash.com/photo-1580893246223-c53915f43939"] },
     { name: "Soap Bar", cat: "Beauty", sub: "Bath", brand: "PureWash", desc: "Natural scented soap bar.", imgKeyword: "soap bar" },
     { name: "Bath Bomb", cat: "Beauty", sub: "Bath", brand: "FizzFun", desc: "Aromatic fizzy bath bomb.", imgKeyword: "bath bomb" },
     { name: "Sponge", cat: "Home & Living", sub: "Cleaning", brand: "ScrubAway", desc: "Heavy duty kitchen sponge.", imgKeyword: "sponge" },
@@ -807,7 +808,7 @@ const CATALOG_1_5: ProductDef[] = [
     { name: "Cotton Pads", cat: "Beauty", sub: "Tools", brand: "SoftTouch", desc: "Makeup removal cotton pads.", imgKeyword: "cotton pads" },
     { name: "Cotton Buds", cat: "Beauty", sub: "Tools", brand: "SwabClean", desc: "Cotton swabs.", imgKeyword: "cotton swabs" },
     { name: "Floss", cat: "Health", sub: "Oral Care", brand: "CleanTeeth", desc: "Mint waxed dental floss.", imgKeyword: "dental floss" },
-    { name: "Toothbrush", cat: "Health", sub: "Oral Care", brand: "BrushDaily", desc: "Manual toothbrush soft bristles.", imgKeyword: "toothbrush" },
+    { name: "Toothbrush", cat: "Health", sub: "Oral Care", brand: "BrushDaily", desc: "Manual toothbrush soft bristles.", imgKeyword: "toothbrush", imageUrls: ["https://images.unsplash.com/photo-1590999659148-0683b542038e", "https://images.unsplash.com/photo-1559676169-a7d29ce6834e", "https://images.unsplash.com/photo-1609840114035-3c981b782dfe", "https://images.unsplash.com/photo-1631693750030-a8f5c9578878"] },
     { name: "Toothpaste", cat: "Health", sub: "Oral Care", brand: "MintFresh", desc: "Travel size toothpaste.", imgKeyword: "toothpaste" },
     { name: "Tissue", cat: "Home & Living", sub: "Hygiene", brand: "SoftBlow", desc: "Pocket tissue pack.", imgKeyword: "tissue" },
     { name: "Wipes", cat: "Home & Living", sub: "Hygiene", brand: "CleanWipe", desc: "Antibacterial wet wipes.", imgKeyword: "wet wipes" },
@@ -816,20 +817,20 @@ const CATALOG_1_5: ProductDef[] = [
     { name: "Luggage Tag", cat: "Home & Living", sub: "Travel", brand: "TagIt", desc: "Plastic luggage ID tag.", imgKeyword: "luggage tag" },
     { name: "Sleep Mask", cat: "Home & Living", sub: "Travel", brand: "RestWell", desc: "Satin sleep eye mask.", imgKeyword: "sleep mask" },
     { name: "Ear Plugs", cat: "Health", sub: "Travel", brand: "QuietZone", desc: "Foam noise reduction ear plugs.", imgKeyword: "ear plugs" },
-    { name: "Carabiner", cat: "Sports", sub: "Gear", brand: "ClipOn", desc: "Aluminum accessory carabiner.", imgKeyword: "carabiner" },
+    { name: "Carabiner", cat: "Sports", sub: "Gear", brand: "ClipOn", desc: "Aluminum accessory carabiner.", imgKeyword: "carabiner", imageUrls: ["https://images.unsplash.com/photo-1549487431-b9a39c5a1780", "https://images.unsplash.com/photo-1607542441845-8f6b896b048d", "https://images.unsplash.com/photo-1588648939029-051a37c352c3", "https://images.unsplash.com/photo-1619472304902-7a6f2384b6f6"] },
     { name: "Paracord", cat: "Sports", sub: "Gear", brand: "RopeStrong", desc: "Utility paracord bracelet.", imgKeyword: "paracord" },
     { name: "Bouncy Ball", cat: "Toys & Games", sub: "Outdoor", brand: "BounceHigh", desc: "High bounce rubber ball.", imgKeyword: "bouncy ball" },
     { name: "Marbles", cat: "Toys & Games", sub: "Classic", brand: "RollPlay", desc: "Glass marbles bag.", imgKeyword: "marbles" },
-    { name: "Dice", cat: "Toys & Games", sub: "Classic", brand: "RollWin", desc: "Six-sided dice pair.", imgKeyword: "dice" },
-    { name: "Playing Cards", cat: "Toys & Games", sub: "Classic", brand: "DeckPlay", desc: "Standard deck of playing cards.", imgKeyword: "playing cards" }
+    { name: "Dice", cat: "Toys & Games", sub: "Classic", brand: "RollWin", desc: "Six-sided dice pair.", imgKeyword: "dice", imageUrls: ["https://images.unsplash.com/photo-1591122319085-f3dbf072c39d", "https://images.unsplash.com/photo-1616429302611-e6a6d6d45e5b", "https://images.unsplash.com/photo-1551028127-8097b8305c47", "https://images.unsplash.com/photo-1511553315694-8a6a4a259b32"] },
+    { name: "Playing Cards", cat: "Toys & Games", sub: "Classic", brand: "DeckPlay", desc: "Standard deck of playing cards.", imgKeyword: "playing cards", imageUrls: ["https://images.unsplash.com/photo-1593351414741-2287b0a88319", "https://images.unsplash.com/photo-1544662038-d5e44a4b1f41", "https://images.unsplash.com/photo-1585501905009-02684814a601", "https://images.unsplash.com/photo-1614793393043-4ab673615b16"] }
 ];
 
 // 2. $6-10 CATALOG (100 Items)
 const CATALOG_6_10: ProductDef[] = [
-    { name: "Ceramic Mug", cat: "Home & Living", sub: "Kitchen", brand: "MugLife", desc: "Classic ceramic coffee mug.", imgKeyword: "ceramic mug" },
+    { name: "Ceramic Mug", cat: "Home & Living", sub: "Kitchen", brand: "MugLife", desc: "Classic ceramic coffee mug.", imgKeyword: "ceramic mug", imageUrls: ["https://images.unsplash.com/photo-1594311244037-c81d135c39a3", "https://images.unsplash.com/photo-1555982364-a74384e38fee", "https://images.unsplash.com/photo-1541167760496-1628856ab772", "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd"] },
     { name: "Travel Mug", cat: "Home & Living", sub: "Kitchen", brand: "GoCup", desc: "Insulated plastic travel mug.", imgKeyword: "travel mug" },
     { name: "Glass Tumbler", cat: "Home & Living", sub: "Kitchen", brand: "ClearSip", desc: "Durable drinking glass.", imgKeyword: "glass tumbler" },
-    { name: "Water Bottle", cat: "Sports", sub: "Gear", brand: "HydrateNow", desc: "BPA-free plastic water bottle.", imgKeyword: "water bottle" },
+    { name: "Water Bottle", cat: "Sports", sub: "Gear", brand: "HydrateNow", desc: "BPA-free plastic water bottle.", imgKeyword: "water bottle", imageUrls: ["https://images.unsplash.com/photo-1602143407151-7111542de6e8", "https://images.unsplash.com/photo-1598808734262-a5ef98748366", "https://images.unsplash.com/photo-1524863479628-9721a5a81a78", "https://images.unsplash.com/photo-1570830733868-8b438f29241b"] },
     { name: "Wine Glass", cat: "Home & Living", sub: "Dining", brand: "VineDine", desc: "Stemless wine glass.", imgKeyword: "wine glass" },
     { name: "Bowl", cat: "Home & Living", sub: "Kitchen", brand: "DishDelish", desc: "Ceramic cereal bowl.", imgKeyword: "bowl" },
     { name: "Plate", cat: "Home & Living", sub: "Kitchen", brand: "ServeIt", desc: "Dinner plate.", imgKeyword: "plate" },
@@ -853,8 +854,8 @@ const CATALOG_6_10: ProductDef[] = [
     { name: "Jar Candle", cat: "Home & Living", sub: "Decor", brand: "ScentHome", desc: "Scented jar candle.", imgKeyword: "jar candle" },
     { name: "Reed Diffuser", cat: "Home & Living", sub: "Decor", brand: "AirFresh", desc: "Room fragrance reed diffuser.", imgKeyword: "reed diffuser" },
     { name: "Incense Holder", cat: "Home & Living", sub: "Decor", brand: "AshCatch", desc: "Wooden incense burner.", imgKeyword: "incense holder" },
-    { name: "Vase", cat: "Home & Living", sub: "Decor", brand: "FlowerHome", desc: "Small glass flower vase.", imgKeyword: "vase" },
-    { name: "Plant Pot", cat: "Home & Living", sub: "Garden", brand: "GrowGreen", desc: "Ceramic plant pot.", imgKeyword: "plant pot" },
+    { name: "Vase", cat: "Home & Living", sub: "Decor", brand: "FlowerHome", desc: "Small glass flower vase.", imgKeyword: "vase", imageUrls: ["https://images.unsplash.com/photo-1579943545628-62287c8b25a3", "https://images.unsplash.com/photo-1532050949319-399066f1030e", "https://images.unsplash.com/photo-1558239012-74f4b238d363", "https://images.unsplash.com/photo-1540156994784-9045638c4c79"] },
+    { name: "Plant Pot", cat: "Home & Living", sub: "Garden", brand: "GrowGreen", desc: "Ceramic plant pot.", imgKeyword: "plant pot", imageUrls: ["https://images.unsplash.com/photo-1592205830294-44b2046e7368", "https://images.unsplash.com/photo-1586524220712-4c63a693f858", "https://images.unsplash.com/photo-1533038590840-1cde6e668a91", "https://images.unsplash.com/photo-1509423350717-c730a684a26d"] },
     { name: "Artificial Plant", cat: "Home & Living", sub: "Decor", brand: "FakeGreen", desc: "Small faux succulent.", imgKeyword: "succulent" },
     { name: "Photo Frame", cat: "Home & Living", sub: "Decor", brand: "Memories", desc: "4x6 wooden photo frame.", imgKeyword: "photo frame" },
     { name: "Wall Hook", cat: "Home & Living", sub: "Storage", brand: "HangUp", desc: "Decorative wall hook.", imgKeyword: "wall hook" },
@@ -872,30 +873,30 @@ const CATALOG_6_10: ProductDef[] = [
     { name: "Makeup Bag", cat: "Beauty", sub: "Storage", brand: "GlamPack", desc: "Zippered cosmetic pouch.", imgKeyword: "makeup bag" },
     { name: "Toiletry Bag", cat: "Home & Living", sub: "Travel", brand: "TravelWash", desc: "Waterproof toiletry bag.", imgKeyword: "toiletry bag" },
     { name: "Manicure Set", cat: "Beauty", sub: "Nails", brand: "NailCare", desc: "Compact manicure tool kit.", imgKeyword: "manicure set" },
-    { name: "Hair Brush", cat: "Beauty", sub: "Hair", brand: "TangleFree", desc: "Paddle hair brush.", imgKeyword: "hair brush" },
-    { name: "Makeup Brush", cat: "Beauty", sub: "Tools", brand: "BlendIt", desc: "Single makeup brush.", imgKeyword: "makeup brush" },
+    { name: "Hair Brush", cat: "Beauty", sub: "Hair", brand: "TangleFree", desc: "Paddle hair brush.", imgKeyword: "hair brush", imageUrls: ["https://images.unsplash.com/photo-1596704017329-89263b9f6d2f", "https://images.unsplash.com/photo-1563720223523-49ae82a29884", "https://images.unsplash.com/photo-1626292452012-b883050c2264", "https://images.unsplash.com/photo-1622288398463-13831a29339e"] },
+    { name: "Makeup Brush", cat: "Beauty", sub: "Tools", brand: "BlendIt", desc: "Single makeup brush.", imgKeyword: "makeup brush", imageUrls: ["https://images.unsplash.com/photo-1596462502278-27bfdc403348", "https://images.unsplash.com/photo-1526947425960-945c6e72858f", "https://images.unsplash.com/photo-1512496015851-a90fb38ba796", "https://images.unsplash.com/photo-1570494014943-3316d81b4d7f"]},
     { name: "Sponge Set", cat: "Beauty", sub: "Tools", brand: "BlendFace", desc: "Makeup blender sponge set.", imgKeyword: "makeup sponge" },
     { name: "Eyelash Curler", cat: "Beauty", sub: "Tools", brand: "CurlLash", desc: "Metal eyelash curler.", imgKeyword: "eyelash curler" },
     { name: "Hardcover Notebook", cat: "Stationery", sub: "Paper", brand: "NoteHard", desc: "A5 hardcover journal.", imgKeyword: "hardcover notebook" },
-    { name: "Planner", cat: "Stationery", sub: "Paper", brand: "PlanAhead", desc: "Undated daily planner.", imgKeyword: "planner" },
+    { name: "Planner", cat: "Stationery", sub: "Paper", brand: "PlanAhead", desc: "Undated daily planner.", imgKeyword: "planner", imageUrls: ["https://images.unsplash.com/photo-1582534573128-29408092714c", "https://images.unsplash.com/photo-1516846114144-1279a4a743c0", "https://images.unsplash.com/photo-1598791318284-883c1626d5a1", "https://images.unsplash.com/photo-1506784983877-45594efa4c85"] },
     { name: "Desk Organizer", cat: "Stationery", sub: "Storage", brand: "DeskTidy", desc: "Mesh desk organizer.", imgKeyword: "desk organizer" },
     { name: "Pen Holder", cat: "Stationery", sub: "Storage", brand: "PenStand", desc: "Cup pen holder.", imgKeyword: "pen holder" },
-    { name: "Mouse Pad", cat: "Electronics", sub: "Accessories", brand: "SmoothGlide", desc: "Basic fabric mouse pad.", imgKeyword: "mouse pad" },
-    { name: "USB Hub", cat: "Electronics", sub: "Gadgets", brand: "PortExpand", desc: "4-port USB 2.0 hub.", imgKeyword: "usb hub" },
-    { name: "Phone Case", cat: "Electronics", sub: "Accessories", brand: "CoverUp", desc: "Silicone phone case.", imgKeyword: "phone case" },
-    { name: "Screen Protector", cat: "Electronics", sub: "Accessories", brand: "GlassGuard", desc: "Tempered glass screen protector.", imgKeyword: "screen protector" },
-    { name: "USB-C Cable", cat: "Electronics", sub: "Accessories", brand: "ConnectC", desc: "Braided USB-C charging cable.", imgKeyword: "usb-c cable" },
-    { name: "Lightning Cable", cat: "Electronics", sub: "Accessories", brand: "ConnectL", desc: "Braided Lightning cable.", imgKeyword: "lightning cable" },
-    { name: "Wall Charger", cat: "Electronics", sub: "Accessories", brand: "PowerPlug", desc: "Single port USB wall charger.", imgKeyword: "wall charger" },
-    { name: "Car Charger", cat: "Electronics", sub: "Accessories", brand: "AutoCharge", desc: "Dual port car charger.", imgKeyword: "car charger" },
-    { name: "Phone Mount", cat: "Electronics", sub: "Accessories", brand: "DashHold", desc: "Car dashboard phone mount.", imgKeyword: "phone mount" },
-    { name: "Laptop Sleeve", cat: "Electronics", sub: "Accessories", brand: "SafeSleeve", desc: "Neoprene laptop sleeve.", imgKeyword: "laptop sleeve" },
-    { name: "Camera Strap", cat: "Electronics", sub: "Accessories", brand: "SecureCam", desc: "Woven camera neck strap.", imgKeyword: "camera strap" },
-    { name: "Plain T-shirt", cat: "Fashion", sub: "Apparel", brand: "BasicWear", desc: "Cotton crew neck t-shirt.", imgKeyword: "t-shirt" },
+    { name: "Mouse Pad", cat: "Electronics", sub: "Accessories", brand: "SmoothGlide", desc: "Basic fabric mouse pad.", imgKeyword: "mouse pad", imageUrls: ["https://images.unsplash.com/photo-1615596482323-95f7450a11a8?q=80&w=800", "https://images.unsplash.com/photo-1593409117392-353d5a71221d?q=80&w=800", "https://images.unsplash.com/photo-1604399348639-652b45e751d3?q=80&w=800", "https://images.unsplash.com/photo-1627843563962-bf238f921528?q=80&w=800"] },
+    { name: "USB Hub", cat: "Electronics", sub: "Gadgets", brand: "PortExpand", desc: "4-port USB 2.0 hub.", imgKeyword: "usb hub", imageUrls: ["https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?q=80&w=800", "https://images.unsplash.com/photo-1594212699903-ec8a64e1f972?q=80&w=800", "https://images.unsplash.com/photo-1604159535698-b8d4f4041e17?q=80&w=800", "https://images.unsplash.com/photo-1617431118683-e2d73356e6f1?q=80&w=800"] },
+    { name: "Phone Case", cat: "Electronics", sub: "Accessories", brand: "CoverUp", desc: "Silicone phone case.", imgKeyword: "phone case", imageUrls: ["https://images.unsplash.com/photo-1616077168079-7e09a6b77fb2c?q=80&w=800", "https://images.unsplash.com/photo-1610945415252-902d84799008?q=80&w=800", "https://images.unsplash.com/photo-1607525378415-4a572e057375?q=80&w=800", "https://images.unsplash.com/photo-1593510987184-88f8d6840888?q=80&w=800"] },
+    { name: "Screen Protector", cat: "Electronics", sub: "Accessories", brand: "GlassGuard", desc: "Tempered glass screen protector.", imgKeyword: "screen protector", imageUrls: ["https://images.unsplash.com/photo-1598327105553-761a2938a165?q=80&w=800", "https://images.unsplash.com/photo-1601972602996-369488ba8f92?q=80&w=800", "https://images.unsplash.com/photo-1605256214048-53b70f032128?q=80&w=800", "https://images.unsplash.com/photo-1607428135544-a7d344843b0f?q=80&w=800"] },
+    { name: "USB-C Cable", cat: "Electronics", sub: "Accessories", brand: "ConnectC", desc: "Braided USB-C charging cable.", imgKeyword: "usb-c cable", imageUrls: ["https://images.unsplash.com/photo-1604076913837-52ab5629fba9?q=80&w=800", "https://images.unsplash.com/photo-1623512870125-502a3a5f7899?q=80&w=800", "https://images.unsplash.com/photo-1614741128883-c21e0f345427?q=80&w=800", "https://images.unsplash.com/photo-1583138833923-a5e29c788a4c?q=80&w=800"] },
+    { name: "Lightning Cable", cat: "Electronics", sub: "Accessories", brand: "ConnectL", desc: "Braided Lightning cable.", imgKeyword: "lightning cable", imageUrls: ["https://images.unsplash.com/photo-1592795854897-5a0497e289c0?q=80&w=800", "https://images.unsplash.com/photo-1585250003309-694ff8692341?q=80&w=800", "https://images.unsplash.com/photo-1487843403265-033162985175?q=80&w=800", "https://images.unsplash.com/photo-1542487354-feaf2d8e4152?q=80&w=800"] },
+    { name: "Wall Charger", cat: "Electronics", sub: "Accessories", brand: "PowerPlug", desc: "Single port USB wall charger.", imgKeyword: "wall charger", imageUrls: ["https://images.unsplash.com/photo-1588850563454-3a5a7821034f?q=80&w=800", "https://images.unsplash.com/photo-1614036125134-a1a9ea550f75?q=80&w=800", "https://images.unsplash.com/photo-1617578112104-e3683f3f58a3?q=80&w=800", "https://images.unsplash.com/photo-1613435676359-c1a171c7b8e5?q=80&w=800"] },
+    { name: "Car Charger", cat: "Electronics", sub: "Accessories", brand: "AutoCharge", desc: "Dual port car charger.", imgKeyword: "car charger", imageUrls: ["https://images.unsplash.com/photo-1599951691231-7b7d6b3c92e1?q=80&w=800", "https://plus.unsplash.com/premium_photo-1681412205166-705a6157f137?q=80&w=800", "https://images.unsplash.com/photo-1599951691231-7b7d6b3c92e1?q=80&w=800", "https://plus.unsplash.com/premium_photo-1681412205166-705a6157f137?q=80&w=800"] },
+    { name: "Phone Mount", cat: "Electronics", sub: "Accessories", brand: "DashHold", desc: "Car dashboard phone mount.", imgKeyword: "phone mount", imageUrls: ["https://images.unsplash.com/photo-1616983702451-f3b3c3c4b4d6?q=80&w=800", "https://images.unsplash.com/photo-1598436034173-7393c0f2a759?q=80&w=800", "https://images.unsplash.com/photo-1611756403282-a5b5c93c4a4a?q=80&w=800", "https://images.unsplash.com/photo-1625244690002-3c3cf5c558b3?q=80&w=800"] },
+    { name: "Laptop Sleeve", cat: "Electronics", sub: "Accessories", brand: "SafeSleeve", desc: "Neoprene laptop sleeve.", imgKeyword: "laptop sleeve", imageUrls: ["https://images.unsplash.com/photo-1588850563454-3a5a7821034f?q=80&w=800", "https://images.unsplash.com/photo-1564466683-1b77844101e8?q=80&w=800", "https://images.unsplash.com/photo-1617431118683-e2d73356e6f1?q=80&w=800", "https://images.unsplash.com/photo-1610465299993-374fa37ce608?q=80&w=800"] },
+    { name: "Camera Strap", cat: "Electronics", sub: "Accessories", brand: "SecureCam", desc: "Woven camera neck strap.", imgKeyword: "camera strap", imageUrls: ["https://images.unsplash.com/photo-1512790182412-b194d81fb79d?q=80&w=800", "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800", "https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800", "https://images.unsplash.com/photo-1608741368918-a6d13d2a715f?q=80&w=800"] },
+    { name: "Plain T-shirt", cat: "Fashion", sub: "Apparel", brand: "BasicWear", desc: "Cotton crew neck t-shirt.", imgKeyword: "t-shirt", imageUrls: ["https://images.unsplash.com/photo-1583743814966-8936f5b7be1a", "https://images.unsplash.com/photo-1622445275463-92ab36ee8218", "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab", "https://images.unsplash.com/photo-1618354691373-d851c5c3a990"] },
     { name: "Tank Top", cat: "Fashion", sub: "Apparel", brand: "SummerWear", desc: "Basic cotton tank top.", imgKeyword: "tank top" },
     { name: "Socks Pack", cat: "Fashion", sub: "Apparel", brand: "FootCozy", desc: "3-pack ankle socks.", imgKeyword: "socks" },
     { name: "Boxer Briefs", cat: "Fashion", sub: "Apparel", brand: "InnerComfort", desc: "Cotton boxer briefs.", imgKeyword: "boxer briefs" },
-    { name: "Beanie", cat: "Fashion", sub: "Accessories", brand: "WarmHead", desc: "Knit beanie hat.", imgKeyword: "beanie" },
+    { name: "Beanie", cat: "Fashion", sub: "Accessories", brand: "WarmHead", desc: "Knit beanie hat.", imgKeyword: "beanie", imageUrls: ["https://images.unsplash.com/photo-1641379983404-54b98c73c2a6", "https://images.unsplash.com/photo-1610239327047a4687afc2", "https://images.unsplash.com/photo-1611352013349-b4b8d234f1e6", "https://images.unsplash.com/photo-1576038446979-9941a3311689"] },
     { name: "Cap", cat: "Fashion", sub: "Accessories", brand: "SunShade", desc: "Baseball cap.", imgKeyword: "baseball cap" },
     { name: "Bucket Hat", cat: "Fashion", sub: "Accessories", brand: "RetroWear", desc: "Cotton bucket hat.", imgKeyword: "bucket hat" },
     { name: "Gloves", cat: "Fashion", sub: "Accessories", brand: "WinterHand", desc: "Knit winter gloves.", imgKeyword: "gloves" },
@@ -906,7 +907,7 @@ const CATALOG_6_10: ProductDef[] = [
     { name: "Tote Bag", cat: "Fashion", sub: "Bags", brand: "CarryAll", desc: "Canvas tote bag.", imgKeyword: "tote bag" },
     { name: "Shopping Bag", cat: "Home & Living", sub: "Utility", brand: "EcoShopper", desc: "Reusable fold-up shopping bag.", imgKeyword: "shopping bag" },
     { name: "Umbrella", cat: "Fashion", sub: "Accessories", brand: "RainAway", desc: "Compact travel umbrella.", imgKeyword: "umbrella" },
-    { name: "Sunglasses", cat: "Fashion", sub: "Accessories", brand: "SunView", desc: "Classic style sunglasses.", imgKeyword: "sunglasses" },
+    { name: "Sunglasses", cat: "Fashion", sub: "Accessories", brand: "SunView", desc: "Classic style sunglasses.", imgKeyword: "sunglasses", imageUrls: ["https://images.unsplash.com/photo-1577803645773-f144005fb4d1", "https://images.unsplash.com/photo-1511499767150-a48a237f0083", "https://images.unsplash.com/photo-1552346154-21d32810aba3", "https://images.unsplash.com/photo-1572635196237-14b3f281503f"] },
     { name: "Reading Glasses", cat: "Health", sub: "Vision", brand: "ClearRead", desc: "Basic reading glasses.", imgKeyword: "glasses" },
     { name: "Watch Strap", cat: "Fashion", sub: "Accessories", brand: "TimeBand", desc: "Replacement nylon watch strap.", imgKeyword: "watch strap" },
     { name: "Jewelry Box", cat: "Fashion", sub: "Storage", brand: "GemSafe", desc: "Small jewelry travel box.", imgKeyword: "jewelry box" },
@@ -914,7 +915,7 @@ const CATALOG_6_10: ProductDef[] = [
     { name: "Chain Necklace", cat: "Fashion", sub: "Jewelry", brand: "NeckChain", desc: "Thin silver-tone chain.", imgKeyword: "necklace" },
     { name: "Beaded Bracelet", cat: "Fashion", sub: "Jewelry", brand: "WristBead", desc: "Stretch beaded bracelet.", imgKeyword: "bracelet" },
     { name: "Simple Ring", cat: "Fashion", sub: "Jewelry", brand: "FingerBand", desc: "Minimalist metal ring.", imgKeyword: "ring" },
-    { name: "Dog Toy", cat: "Pet Supplies", sub: "Toys", brand: "PlayPup", desc: "Rope chew toy for dogs.", imgKeyword: "dog toy" },
+    { name: "Dog Toy", cat: "Pet Supplies", sub: "Toys", brand: "PlayPup", desc: "Rope chew toy for dogs.", imgKeyword: "dog toy", imageUrls: ["https://images.unsplash.com/photo-1611090940494-4361e687b337", "https://images.unsplash.com/photo-1549483321-f3b3d4b65392", "https://images.unsplash.com/photo-1587763213559-03f67718c66e", "https://images.unsplash.com/photo-1529429617124-95b109e86bb8"] },
     { name: "Cat Toy", cat: "Pet Supplies", sub: "Toys", brand: "PlayKitty", desc: "Feather wand cat toy.", imgKeyword: "cat toy" },
     { name: "Dog Collar", cat: "Pet Supplies", sub: "Accessories", brand: "NeckPup", desc: "Nylon dog collar.", imgKeyword: "dog collar" },
     { name: "Cat Collar", cat: "Pet Supplies", sub: "Accessories", brand: "NeckKitty", desc: "Collar with bell for cats.", imgKeyword: "cat collar" },
@@ -924,7 +925,7 @@ const CATALOG_6_10: ProductDef[] = [
     { name: "Garden Gloves", cat: "Home & Living", sub: "Garden", brand: "HandProtect", desc: "Cotton gardening gloves.", imgKeyword: "gardening gloves" },
     { name: "Seeds Pack", cat: "Home & Living", sub: "Garden", brand: "GrowLife", desc: "Assorted flower seeds.", imgKeyword: "seeds" },
     { name: "Watering Can", cat: "Home & Living", sub: "Garden", brand: "RainPour", desc: "Small plastic watering can.", imgKeyword: "watering can" },
-    { name: "Flashlight", cat: "Gadgets", sub: "Tools", brand: "NightBeam", desc: "Handheld LED flashlight.", imgKeyword: "flashlight" }
+    { name: "Flashlight", cat: "Gadgets", sub: "Tools", brand: "NightBeam", desc: "Handheld LED flashlight.", imgKeyword: "flashlight", imageUrls: ["https://images.unsplash.com/photo-1582845512747-e42004273331", "https://images.unsplash.com/photo-1616870633904-173699b08657", "https://images.unsplash.com/photo-1572972037740-49b04a259a4c", "https://images.unsplash.com/photo-1620625349372-353cfc90e0b3"] }
 ];
 
 // Helper to generate a consistent image URL
@@ -1032,9 +1033,14 @@ const generateCatalogProducts = (catalog: ProductDef[], priceMin: number, priceM
         });
 
         // Generate 4 Images
-        const productImages = Array.from({ length: 4 }).map((_, iIndex) => ({
-            image_url: `https://images.unsplash.com/photo-${getUnsplashId(item.imgKeyword, iIndex)}?auto=format&fit=crop&w=800&q=80`,
-            alt_text: `${item.name} - View ${iIndex + 1}`
+        const productImages = item.imageUrls
+            ? item.imageUrls.map((url, iIndex) => ({
+                image_url: `${url}&q=80&w=800`,
+                alt_text: `${item.name} - View ${iIndex + 1}`
+            }))
+            : Array.from({ length: 4 }).map((_, iIndex) => ({
+                image_url: `https://images.unsplash.com/photo-${getUnsplashId(item.imgKeyword, iIndex)}?auto=format&fit=crop&w=800&q=80`,
+                alt_text: `${item.name} - View ${iIndex + 1}`
         }));
 
         const product: Product = {

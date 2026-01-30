@@ -41,6 +41,7 @@ const Header: React.FC = () => {
 
   const navLinkClasses = "text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200";
   const activeNavLinkClasses = "text-primary-600 dark:text-primary-400 font-semibold";
+  const iconButtonClasses = "p-2 rounded-full bg-primary-600 text-white hover:bg-primary-700 transition-colors";
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-sm sticky top-0 z-40">
@@ -59,7 +60,7 @@ const Header: React.FC = () => {
                     <button 
                         onMouseEnter={() => setIsMegaMenuOpen(true)}
                         onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
-                        className={`${navLinkClasses} flex items-center gap-1`}
+                        className={`${navLinkClasses} flex items-center gap-1 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md p-2 -my-2`}
                     >
                         Categories <ChevronDownIcon className={`h-4 w-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
                     </button>
@@ -80,9 +81,6 @@ const Header: React.FC = () => {
                                             {category}
                                         </Link>
                                     ))}
-                                    <Link to="/products" onClick={() => setIsMegaMenuOpen(false)} className="block font-bold text-primary-600 dark:text-primary-400 hover:pl-1 transition-all col-span-full mt-4">
-                                        Shop All Products &rarr;
-                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +92,7 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4">
             <button
               onClick={() => navigate('/search')}
-              className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+              className={iconButtonClasses}
               aria-label="Search"
             >
               <MagnifyingGlassIcon className="h-6 w-6" />
@@ -107,7 +105,7 @@ const Header: React.FC = () => {
                       setIsRegionMenuOpen(!isRegionMenuOpen);
                       setRegionSearchQuery('');
                   }}
-                  className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center space-x-1"
+                  className={`${iconButtonClasses} flex items-center space-x-1`}
                   title={currentRegion.name}
                 >
                     <span className="text-lg">{currentRegion.flag}</span>
@@ -134,7 +132,7 @@ const Header: React.FC = () => {
                                             setRegion(region.code);
                                             setIsRegionMenuOpen(false);
                                         }}
-                                        className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-700 ${currentRegion.code === region.code ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 font-bold' : 'text-gray-700 dark:text-gray-200'}`}
+                                        className={`flex items-center w-full px-4 py-2 text-sm text-left bg-transparent ${currentRegion.code === region.code ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600 font-bold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
                                     >
                                         <span className="mr-3 text-lg">{region.flag}</span>
                                         <div className="flex flex-col">
@@ -151,24 +149,24 @@ const Header: React.FC = () => {
                 )}
             </div>
 
-            <button onClick={toggleTheme} className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <button onClick={toggleTheme} className={iconButtonClasses}>
               {theme === 'light' ? <MoonIcon className="h-6 w-6" /> : <SunIcon className="h-6 w-6" />}
             </button>
-            <Link to="/wishlist" className="relative p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <Link to="/wishlist" className={`relative ${iconButtonClasses}`}>
               <HeartIcon className="h-6 w-6" />
               {wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 block h-5 w-5 rounded-full bg-primary-600 text-white text-xs flex items-center justify-center transform translate-x-1/2 -translate-y-1/2">
+                <span className="absolute top-0 right-0 block h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center transform translate-x-1/2 -translate-y-1/2 border-2 border-primary-600">
                   {wishlistCount}
                 </span>
               )}
             </Link>
-            <Link to={isAuthenticated ? "/profile" : "/auth"} className="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <Link to={isAuthenticated ? "/profile" : "/auth"} className={iconButtonClasses}>
               <UserCircleIcon className="h-6 w-6" />
             </Link>
-            <Link to="/cart" className="relative p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <Link to="/cart" className={`relative ${iconButtonClasses}`}>
               <ShoppingCartIcon className="h-6 w-6" />
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 block h-5 w-5 rounded-full bg-primary-600 text-white text-xs flex items-center justify-center transform translate-x-1/2 -translate-y-1/2">
+                <span className="absolute top-0 right-0 block h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center transform translate-x-1/2 -translate-y-1/2 border-2 border-primary-600">
                   {cartCount}
                 </span>
               )}
@@ -177,11 +175,11 @@ const Header: React.FC = () => {
           <div className="md:hidden flex items-center">
              <button 
                   onClick={() => setIsRegionMenuOpen(!isRegionMenuOpen)}
-                  className="p-2 mr-2 rounded-full text-gray-600 dark:text-gray-300"
+                  className="p-2 mr-2 rounded-full bg-primary-600 text-white"
                 >
                     <span className="text-lg">{currentRegion.flag}</span>
             </button>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 rounded-md text-gray-600 dark:text-gray-300">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 rounded-md bg-primary-600 text-white">
               {isMenuOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
             </button>
           </div>
@@ -192,19 +190,18 @@ const Header: React.FC = () => {
              <div className="relative mb-4">
                 <button 
                   onClick={() => { navigate('/search'); setIsMenuOpen(false); }}
-                  className="w-full text-left bg-gray-100 dark:bg-gray-800 border border-transparent rounded-full py-2 pl-10 pr-4 text-sm text-gray-500"
+                  className="w-full text-left bg-gray-100 dark:bg-gray-800 border border-transparent rounded-full py-2 pl-10 pr-4 text-sm text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700"
                 >
                   Search...
                 </button>
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"/>
              </div>
             <div className="flex flex-col space-y-2">
-              <NavLink to="/" className={({ isActive }: any) => isActive ? activeNavLinkClasses : navLinkClasses} onClick={() => setIsMenuOpen(false)}>Home</NavLink>
-              <NavLink to="/products" className={({ isActive }: any) => isActive ? activeNavLinkClasses : navLinkClasses} onClick={() => setIsMenuOpen(false)}>All Products</NavLink>
-              <NavLink to={isAuthenticated ? "/profile" : "/auth"} className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>Profile</NavLink>
-              <NavLink to="/wishlist" className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>Wishlist ({wishlistCount})</NavLink>
-              <NavLink to="/cart" className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>Cart ({cartCount})</NavLink>
-              <button onClick={toggleTheme} className="flex items-center space-x-2 text-left text-gray-600 dark:text-gray-300 p-1 rounded-md">
+              <NavLink to="/" className={({ isActive }: any) => isActive ? activeNavLinkClasses : navLinkClasses + ' bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-md'} onClick={() => setIsMenuOpen(false)}>Home</NavLink>
+              <NavLink to={isAuthenticated ? "/profile" : "/auth"} className={navLinkClasses + ' bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-md'} onClick={() => setIsMenuOpen(false)}>Profile</NavLink>
+              <NavLink to="/wishlist" className={navLinkClasses + ' bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-md'} onClick={() => setIsMenuOpen(false)}>Wishlist ({wishlistCount})</NavLink>
+              <NavLink to="/cart" className={navLinkClasses + ' bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-md'} onClick={() => setIsMenuOpen(false)}>Cart ({cartCount})</NavLink>
+              <button onClick={toggleTheme} className="flex items-center space-x-2 text-left text-gray-600 dark:text-gray-300 p-2 rounded-md bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800">
                 {theme === 'light' ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
                 <span>Toggle Theme</span>
               </button>
@@ -216,7 +213,7 @@ const Header: React.FC = () => {
              <div className="absolute top-16 right-4 left-4 z-50 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 md:w-64 md:left-auto flex flex-col max-h-[80vh]">
                  <div className="flex justify-between items-center mb-2">
                     <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Select Region</h3>
-                    <button onClick={() => setIsRegionMenuOpen(false)} className="text-gray-400 hover:text-gray-500"><XMarkIcon className="h-5 w-5"/></button>
+                    <button onClick={() => setIsRegionMenuOpen(false)} className="text-gray-400 hover:text-gray-500 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 p-1 rounded-full"><XMarkIcon className="h-5 w-5"/></button>
                  </div>
                  <input
                     type="text"
@@ -233,7 +230,7 @@ const Header: React.FC = () => {
                                 setRegion(region.code);
                                 setIsRegionMenuOpen(false);
                             }}
-                            className={`flex items-center justify-between w-full p-2 rounded-md ${currentRegion.code === region.code ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                            className={`flex items-center justify-between w-full p-2 rounded-md bg-transparent ${currentRegion.code === region.code ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-600' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
                         >
                             <span className="flex items-center space-x-3">
                                 <span className="text-2xl">{region.flag}</span>

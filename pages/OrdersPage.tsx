@@ -191,9 +191,12 @@ const OrdersPage: React.FC = () => {
             })
           ) : (
             <div className="text-center py-20 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-              <InboxIcon className="h-16 w-16 mx-auto text-gray-300 dark:text-gray-600" />
-              <h3 className="mt-4 text-xl font-bold text-gray-800 dark:text-gray-200">No orders here</h3>
-              <p className="mt-2 text-gray-500 dark:text-gray-400">You don't have any {filter.toLowerCase()} orders yet.</p>
+              <TruckIcon className="h-16 w-16 mx-auto text-gray-300 dark:text-gray-600" />
+              <h3 className="mt-4 text-2xl font-bold text-gray-800 dark:text-gray-200">Your Adventure Awaits</h3>
+              <p className="mt-2 text-gray-500 dark:text-gray-400 max-w-sm mx-auto">You haven't placed any orders yet. Once you do, your tracking and order details will appear here.</p>
+              <Link to="/" className="mt-6 inline-block bg-primary-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors duration-300 shadow-lg shadow-primary-500/30">
+                Start Shopping
+              </Link>
             </div>
           )}
         </div>

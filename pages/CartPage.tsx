@@ -18,7 +18,7 @@ const CartPage: React.FC = () => {
         {cartItems.length === 0 ? (
           <div className="text-center py-10">
             <ShoppingBagIcon className="h-16 w-16 mx-auto text-gray-400" />
-            <p className="mt-4 text-xl text-gray-500 dark:text-gray-400">Your cart is empty.</p>
+            <p className="mt-4 text-xl text-gray-500 dark:text-gray-400">Your Cart feels a little lonely. There is nothing here.</p>
             <Link to="/" className="mt-6 inline-block bg-primary-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors duration-300">
               Continue Shopping
             </Link>
@@ -41,13 +41,13 @@ const CartPage: React.FC = () => {
                         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{Object.values(item.variant.options).join(' / ')}</p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">
-                        <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
-                           <button onClick={() => updateQuantity(item.variant.variant_id, item.quantity - 1)} className="px-2 py-1">-</button>
-                           <span className="px-3 py-1">{item.quantity}</span>
-                           <button onClick={() => updateQuantity(item.variant.variant_id, item.quantity + 1)} className="px-2 py-1">+</button>
+                        <div className="flex items-center gap-3">
+                           <button onClick={() => updateQuantity(item.variant.variant_id, item.quantity - 1)} className="w-8 h-8 flex items-center justify-center bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-colors">-</button>
+                           <span className="font-bold text-lg">{item.quantity}</span>
+                           <button onClick={() => updateQuantity(item.variant.variant_id, item.quantity + 1)} className="w-8 h-8 flex items-center justify-center bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-colors">+</button>
                         </div>
                         <div className="flex">
-                          <button onClick={() => removeFromCart(item.variant.variant_id)} type="button" className="font-medium text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 flex items-center space-x-1">
+                          <button onClick={() => removeFromCart(item.variant.variant_id)} type="button" className="font-medium text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 flex items-center space-x-1 bg-gray-100 dark:bg-gray-700 p-2 rounded-md">
                             <TrashIcon className="h-4 w-4" />
                             <span>Remove</span>
                           </button>
@@ -57,7 +57,7 @@ const CartPage: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <button onClick={clearCart} className="mt-4 text-sm text-gray-500 hover:underline">Clear Cart</button>
+              <button onClick={clearCart} className="mt-4 text-sm text-gray-500 hover:underline bg-gray-200 dark:bg-gray-700 p-2 rounded-md">Clear Cart</button>
             </div>
             <div className="lg:col-span-1">
               <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 sticky top-24">

@@ -19,24 +19,24 @@ export const fetchProductById = async (id: string): Promise<Product | undefined>
 };
 
 export const searchProducts = async (query: string): Promise<Product[]> => {
-    console.log(`Searching for products with query: ${query}`);
-    await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
+  console.log(`Searching for products with query: ${query}`);
+  await new Promise(resolve => setTimeout(resolve, 300)); // Simulate search delay
+
+  if (!query) {
+    return [];
+  }
+
+  const lowerCaseQuery = query.toLowerCase();
+  
+  return products.filter(product => {
+    const inTitle = product.title.toLowerCase().includes(lowerCaseQuery);
+    const inDescription = product.short_description.toLowerCase().includes(lowerCaseQuery);
+    const inBrand = product.brand.toLowerCase().includes(lowerCaseQuery);
+    const inCategory = product.category.toLowerCase().includes(lowerCaseQuery);
+    const inTags = product.tags.some(tag => tag.toLowerCase().includes(lowerCaseQuery));
     
-    if (!query) {
-        return [];
-    }
-
-    const lowerCaseQuery = query.toLowerCase();
-
-    return products.filter(product => {
-        const inTitle = product.title.toLowerCase().includes(lowerCaseQuery);
-        const inDescription = product.short_description.toLowerCase().includes(lowerCaseQuery);
-        const inBrand = product.brand.toLowerCase().includes(lowerCaseQuery);
-        const inCategory = product.category.toLowerCase().includes(lowerCaseQuery);
-        const inTags = product.tags.some(tag => tag.toLowerCase().includes(lowerCaseQuery));
-
-        return inTitle || inDescription || inBrand || inCategory || inTags;
-    });
+    return inTitle || inDescription || inBrand || inCategory || inTags;
+  });
 };
 
 

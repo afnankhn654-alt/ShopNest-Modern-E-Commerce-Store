@@ -93,7 +93,7 @@ const AuthPromptModal: React.FC = () => {
                     <div className="mt-6">
                         <button
                             onClick={handleMaybeLater}
-                            className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:underline"
+                            className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:underline bg-gray-100 dark:bg-gray-700 p-2 rounded-md"
                         >
                             Maybe later
                         </button>

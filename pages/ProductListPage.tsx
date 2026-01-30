@@ -72,10 +72,10 @@ const ProductListPage: React.FC = () => {
         {/* Controls */}
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg p-4 mb-8 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-20">
           <div>
-            <p className="font-bold text-gray-800 dark:text-white">{products.length} Products Found</p>
+            <p className="font-bold text-gray-800 dark:text-white">{products.length} Products</p>
           </div>
           <div className="flex items-center space-x-4">
-            <button className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <button className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-colors">
                 <AdjustmentsHorizontalIcon className="h-5 w-5"/>
                 <span className="font-medium">Filter & Sort</span>
             </button>

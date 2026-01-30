@@ -19,7 +19,7 @@ const InfoPage: React.FC<InfoPageProps> = ({ title, contentKey }) => {
                 <div key={job} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow bg-white dark:bg-gray-800">
                   <h3 className="font-bold text-xl mb-2">{job}</h3>
                   <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">Remote / Hybrid</p>
-                  <button className="text-primary-600 font-medium hover:underline">View Details &rarr;</button>
+                  <button className="text-primary-600 font-medium hover:underline bg-gray-100 dark:bg-gray-700 p-2 rounded-md">View Details &rarr;</button>
                 </div>
               ))}
             </div>
@@ -44,9 +44,9 @@ const InfoPage: React.FC<InfoPageProps> = ({ title, contentKey }) => {
              </div>
              <div className="grid md:grid-cols-3 gap-6">
                 {['Track Order', 'Returns & Refunds', 'Payment Settings', 'Account Security', 'Prime Membership', 'Contact Us'].map(topic => (
-                    <div key={topic} className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-center hover:border-primary-500 cursor-pointer">
+                    <button key={topic} className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-center hover:border-primary-500 cursor-pointer">
                         <h4 className="font-bold">{topic}</h4>
-                    </div>
+                    </button>
                 ))}
              </div>
            </div>

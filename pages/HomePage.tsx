@@ -148,7 +148,6 @@ const CreativeMobileHome: React.FC<{ products: Product[], regionCode: string }> 
       <div className="mb-4 bg-white dark:bg-gray-800 py-6">
          <div className="px-4 flex justify-between items-center mb-4">
              <h3 className="font-bold text-lg text-gray-900 dark:text-white">Fresh Drops</h3>
-             <Link to="/products" className="text-primary-600 text-sm font-medium">See all</Link>
          </div>
          
          <div className="flex overflow-x-auto scrollbar-hide px-4 gap-4 pb-2">
@@ -279,21 +278,21 @@ const HomePage: React.FC = () => {
 
              <button 
                 onClick={prevBanner}
-                className="absolute left-2 sm:left-4 top-[30%] z-20 p-2 rounded-full hover:bg-white/20 hover:backdrop-blur-sm focus:outline-none opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute left-2 sm:left-4 top-[30%] z-20 p-2 rounded-full bg-primary-600/50 text-white hover:bg-primary-600 focus:outline-none opacity-0 group-hover:opacity-100 transition-all"
              >
-                <ChevronLeftIcon className="h-8 w-8 sm:h-10 sm:w-10 text-white drop-shadow-lg" />
+                <ChevronLeftIcon className="h-8 w-8 sm:h-10 sm:w-10 drop-shadow-lg" />
              </button>
              <button 
                 onClick={nextBanner}
-                className="absolute right-2 sm:right-4 top-[30%] z-20 p-2 rounded-full hover:bg-white/20 hover:backdrop-blur-sm focus:outline-none opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute right-2 sm:right-4 top-[30%] z-20 p-2 rounded-full bg-primary-600/50 text-white hover:bg-primary-600 focus:outline-none opacity-0 group-hover:opacity-100 transition-all"
              >
-                <ChevronRightIcon className="h-8 w-8 sm:h-10 sm:w-10 text-white drop-shadow-lg" />
+                <ChevronRightIcon className="h-8 w-8 sm:h-10 sm:w-10 drop-shadow-lg" />
              </button>
          </div>
 
          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-20 sm:-mt-32 md:-mt-60 pb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <HomeWidget title="Shop gifts by price" linkTo="/products" linkText="See all offers">
+                <HomeWidget title="Shop gifts by price" linkTo="/products/electronics" linkText="See all offers">
                     <WidgetQuadGrid 
                         items={under25} 
                         titleMap={{
@@ -343,9 +342,6 @@ const HomePage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
                     Trending Collection
                 </h2>
-                <Link to="/products" className="text-sm font-medium text-primary-600 hover:text-primary-500 flex items-center">
-                    See more <ChevronRightIcon className="h-4 w-4 ml-1"/>
-                </Link>
             </div>
             {loading ? <Spinner /> : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -388,7 +384,7 @@ const HomePage: React.FC = () => {
         <div className="border-t border-gray-200 dark:border-gray-700 pt-8 pb-4 text-center">
              <div className="inline-block bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 max-w-2xl w-full">
                 <p className="text-sm mb-2 text-gray-600 dark:text-gray-300">See personalized recommendations</p>
-                <Link to="/auth" className="inline-block w-64 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-1.5 rounded-md text-sm shadow-sm transition-colors mb-2">
+                <Link to="/auth" className="inline-block w-64 bg-primary-600 hover:bg-primary-700 text-white font-bold py-1.5 rounded-md text-sm shadow-sm transition-colors mb-2">
                     Sign in
                 </Link>
                 <div className="text-xs">

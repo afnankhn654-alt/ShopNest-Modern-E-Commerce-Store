@@ -74,12 +74,12 @@ const Toast: React.FC<ToastProps> = ({ notification }) => {
           <p className="text-sm font-bold text-gray-900 dark:text-white">{notification.title}</p>
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{notification.message}</p>
           <div className="mt-3 flex gap-4">
-              <Link to="/cart" onClick={handleClose} className="text-sm font-medium text-primary-600 hover:text-primary-500">View cart</Link>
-              <button onClick={handleClose} className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">Dismiss</button>
+              <Link to="/cart" onClick={handleClose} className="text-sm font-medium text-primary-600 hover:text-primary-500 bg-gray-100 dark:bg-gray-700 p-2 rounded-md">View cart</Link>
+              <button onClick={handleClose} className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 bg-gray-100 dark:bg-gray-700 p-2 rounded-md">Dismiss</button>
           </div>
         </div>
         <div className="flex-shrink-0">
-          <button onClick={handleClose} className="p-1 rounded-full text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+          <button onClick={handleClose} className="p-1 rounded-full text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 bg-gray-50 dark:bg-gray-800">
             <XMarkIcon className="h-5 w-5" />
           </button>
         </div>
